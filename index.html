@@ -3,1976 +3,1128 @@
 <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Aladan AI - الإصدار الأقوى</title> <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <title>Whizz.ink - Gemini Pro مع دعم الصور 🏆</title> 
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/dracula.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"> 
     <style> 
         /* ========================================================================== 
-           AGNES ULTRA 5.0 - النسخة الفائقة التي تهزم Gemini (2025 Ultimate Edition) 
+           WHIZZ.INK - النسخة المحدثة مع Dark Mode وربط مباشر بـ Gemini API وتحديد حجم السجل وزر الإيقاف ودعم الصور وتصفية السجل 
+           Updated: 2025-12-16 | Developer: aladan (Whizz.ink) 
            ========================================================================== */ 
  
         :root { 
-            /* Neon P3 Color System - Default Cyan Theme */ 
-            --neon-cyan: #00FFFF; 
-            --neon-green: #00FF7F; 
-            --neon-purple: #FF00FF; 
-            --neon-blue: #7C3AED; 
-            --neon-orange: #FF8C00; /* Added for more theme options */ 
- 
-            --text-primary: #E0E7FF; 
-            --text-secondary: #A0B3C8; 
-            --bg-primary: #0A111E; 
-            --bg-secondary: #0D1B2A; 
-            --bg-glass: rgba(13, 27, 42, 0.85); /* Slightly darker for better contrast */ 
-            --border-glow: rgba(0, 255, 255, 0.4); /* Stronger glow */ 
- 
-            /* Dynamic Variables */ 
-            --header-height: 80px; 
-            --input-height: 90px; 
-            --mobile-header-height: 70px; 
-            --mobile-input-height: 80px; 
-            --glow-intensity: 0; 
-            --theme: 'cyan'; /* Current active theme */ 
+            /* Light Theme (Default) */ 
+            --primary-bg: #F9FAFB; 
+            --secondary-bg: #FFFFFF; 
+            --border-color: #E5E7EB; 
+            --text-color: #374151; 
+            --text-secondary: #6B7280; 
+            --brand-color: #4F46E5; 
+            --user-bubble-bg: #EEF2FF; 
+            --ai-bubble-bg: #F3F4F6; 
+            --code-bg: #1F2937; 
+            --code-text: #E5E7EB; 
+            --shadow: 0 1px 3px rgba(0,0,0,0.1); 
         } 
  
-        /* --- THEME OVERRIDES (Enhanced from Gemini's feature) --- */ 
-        body.purple-theme { 
-            --neon-cyan: #FF00FF;      /* Magenta */ 
-            --neon-green: #FF69B4;     /* Pink */ 
-            --border-glow: rgba(255, 0, 255, 0.4); 
-        } 
-        body.green-theme { 
-            --neon-cyan: #00FF7F;      /* Bright Green */ 
-            --neon-green: #32CD32;     /* Lime Green */ 
-            --border-glow: rgba(0, 255, 127, 0.4); 
-        } 
-        body.orange-theme { 
-            --neon-cyan: #FF8C00;      /* Dark Orange */ 
-            --neon-green: #FFA500;     /* Orange */ 
-            --border-glow: rgba(255, 140, 0, 0.4); 
-        } 
-        body.rainbow-theme { /* Dynamic Rainbow Animation */ 
-            animation: rainbow 3s linear infinite; 
-        } 
-        @keyframes rainbow { 
-            0%,100%{--neon-cyan:#FF0000; --neon-green:#FF8000; --border-glow:rgba(255,0,0,0.4);} 
-            16%{--neon-cyan:#FF8000; --neon-green:#FFFF00; --border-glow:rgba(255,128,0,0.4);} 
-            33%{--neon-cyan:#FFFF00; --neon-green:#00FF00; --border-glow:rgba(255,255,0,0.4);} 
-            50%{--neon-cyan:#00FF00; --neon-green:#00FFFF; --border-glow:rgba(0,255,0,0.4);} 
-            66%{--neon-cyan:#00FFFF; --neon-green:#0000FF; --border-glow:rgba(0,255,255,0.4);} 
-            83%{--neon-cyan:#0000FF; --neon-green:#FF00FF; --border-glow:rgba(0,0,255,0.4);} 
+        [data-theme="dark"] { 
+            /* Dark Theme */ 
+            --primary-bg: #0F172A; 
+            --secondary-bg: #1E293B; 
+            --border-color: #334155; 
+            --text-color: #F1F5F9; 
+            --text-secondary: #94A3B8; 
+            --brand-color: #6366F1; 
+            --user-bubble-bg: #475569; 
+            --ai-bubble-bg: #334155; 
+            --code-bg: #0F172A; 
+            --code-text: #F1F5F9; 
+            --shadow: 0 1px 3px rgba(0,0,0,0.3); 
         } 
  
- 
-        /* Reset & Base */ 
+        /* Basic Reset & Base */ 
         * { margin: 0; padding: 0; box-sizing: border-box; } 
-        html { scroll-behavior: smooth; font-feature-settings: 'liga' 1, 'clig' 1; } /* Enable Arabic ligatures for better rendering */ 
+        html { scroll-behavior: smooth; } 
         body { 
-            font-family: 'Cairo', system-ui, -apple-system, sans-serif; 
-            background: var(--bg-primary); 
-            color: var(--text-primary); 
-            height: 100vh; 
-            overflow: hidden; 
-            direction: rtl; /* Right-to-Left for Arabic */ 
-            position: relative; 
-            /* Dynamic Neon Background Animation */ 
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), 
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%), 
-                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%); 
-            background-size: 200% 200%; 
-            animation: bgShift 20s ease infinite; 
+            font-family: 'Cairo', sans-serif; 
+            background: var(--primary-bg); 
+            color: var(--text-color); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            direction: rtl; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
         } 
  
-        @keyframes bgShift { 
-            0%, 100% { background-position: 0% 50%; } 
-            50% { background-position: 100% 50%; } 
-        } 
- 
-        /* ========================================================================== 
-           HEADER - شريط علوي متطور مع Glassmorphism (Agnes Original Perfection) 
-           ========================================================================== */ 
+        /* --- Header --- */ 
         .header { 
-            position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); 
-            background: var(--bg-glass); 
-            backdrop-filter: blur(25px) saturate(180%); 
-            border-bottom: 1px solid var(--border-glow); 
-            z-index: 1000; 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 32px; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            background: var(--secondary-bg); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 16px 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: var(--shadow); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
         } 
- 
-        .app-name { display: flex; align-items: center; gap: 16px; } 
- 
-        .logo-gradient { 
-            font-size: 28px; font-weight: 900; 
-            background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 50%, var(--neon-purple) 100%); 
-            background-size: 200% 200%; 
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; 
-            animation: logoShimmer 3s ease-in-out infinite; 
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.6); 
+        .app-name { 
+            font-size: 20px; 
+            font-weight: 700; 
+            color: var(--brand-color); 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
         } 
- 
-        @keyframes logoShimmer { 
-            0%, 100% { background-position: 0% 50%; } 
-            50% { background-position: 100% 50%; } 
+        .header-icons { 
+            display: flex; 
+            gap: 8px; 
         } 
- 
         .header-icon { 
-            width: 48px; height: 48px; border-radius: 16px; 
-            background: rgba(0, 255, 255, 0.08); border: 1px solid var(--border-glow); 
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--text-secondary); cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            position: relative; overflow: hidden; 
+            color: var(--text-color); 
+            font-size: 18px; 
+            cursor: pointer; 
+            padding: 8px; 
+            border-radius: 8px; 
+            transition: all 0.2s ease; 
         } 
- 
-        .header-icon::before { /* Shimmer effect on hover */ 
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); 
-            transition: left 0.5s; 
-        } 
- 
-        .header-icon:hover::before { left: 100%; } 
- 
         .header-icon:hover { 
-            background: rgba(0, 255, 255, 0.2); box-shadow: 0 0 25px rgba(0, 255, 255, 0.6); 
-            transform: translateY(-2px) scale(1.05); color: var(--neon-cyan); 
+            background: var(--ai-bubble-bg); 
+            color: var(--brand-color); 
         } 
  
-        .header-icons { display: flex; gap: 16px; } 
- 
-        /* ========================================================================== 
-           CHAT CONTAINER - منطقة المحادثة المتقدمة (Agnes Original Perfection) 
-           ========================================================================== */ 
-        .chat-container { 
-            height: calc(100vh - var(--header-height) - var(--input-height)); 
-            overflow-y: auto; 
-            padding: calc(var(--header-height) + 40px) 32px 32px; 
-            background: var(--bg-primary); 
-            scrollbar-width: thin; scrollbar-color: var(--border-glow) transparent; 
-        } 
- 
-        .chat-container::-webkit-scrollbar { width: 6px; } 
-        .chat-container::-webkit-scrollbar-track { background: transparent; } 
-        .chat-container::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 3px; } 
- 
-        /* --- ULTIMATE WELCOME SCREEN (Agnes Original Perfection) --- */ 
-        .welcome-container { 
-            max-width: 600px; margin: 0 auto; text-align: center; 
-            background: var(--bg-glass); backdrop-filter: blur(20px); 
-            border: 1px solid var(--border-glow); border-radius: 24px; 
-            padding: 60px 40px; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 255, 255, 0.3); 
-            animation: welcomeFloat 6s ease-in-out infinite; 
-        } 
- 
-        @keyframes welcomeFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } } 
- 
-        .welcome-logo { 
-            font-size: 80px; margin-bottom: 24px; 
-            filter: drop-shadow(0 0 30px var(--neon-cyan)); 
-            animation: pulse 2s infinite; 
-        } 
- 
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } } 
- 
-        .welcome-title { 
-            font-size: 36px; font-weight: 700; 
-            background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 100%); 
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; 
-            margin-bottom: 16px; 
-        } 
- 
-        .welcome-subtitle { 
-            font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 40px; 
-        } 
- 
-        .welcome-actions { display: flex; flex-direction: column; gap: 16px; align-items: center; } 
- 
-        .welcome-btn { 
-            padding: 16px 32px; font-size: 16px; font-weight: 600; 
-            background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 100%); 
-            color: var(--bg-primary); border: none; border-radius: 50px; cursor: pointer; 
-            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.3); 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            position: relative; overflow: hidden; 
-        } 
- 
-        .welcome-btn::before { /* Shimmer effect on hover */ 
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
-            transition: left 0.6s; 
-        } 
- 
-        .welcome-btn:hover::before { left: 100%; } 
- 
-        .welcome-btn:hover { 
-            transform: translateY(-3px) scale(1.02); 
-            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.5); 
-        } 
- 
-        /* ========================================================================== 
-           MESSAGE SYSTEM - نظام الرسائل المتطور (Agnes Original Perfection) 
-           ========================================================================== */ 
-        .message { 
-            display: flex; margin-bottom: 24px; 
-            animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
-            opacity: 0; animation-fill-mode: forwards; 
-        } 
- 
-        .message:nth-child(even) { animation-name: slideInLeft; } 
-        @keyframes slideInRight { to { opacity: 1; transform: translateX(0); } } 
-        @keyframes slideInLeft { to { opacity: 1; transform: translateX(0); } } 
- 
-        .message.user-message { justify-content: flex-end; } 
-        .message.ai-message { justify-content: flex-start; } 
- 
-        .message-bubble { 
-            max-width: 75%; padding: 24px 28px; border-radius: 24px; 
-            position: relative; backdrop-filter: blur(20px); 
-            animation: bubbleGlow 0.5s ease-out forwards; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
-            
-            /* ✅ الإصلاح 2: التأكد من عرض الفقاعة بشكل صحيح */
-            display: block; 
-            width: fit-content; 
-        } 
-        
-        .message-bubble > div:first-child {
-            max-width: 100%;
-            display: block;
-        }
- 
-        @keyframes bubbleGlow { 0% { box-shadow: 0 8px 32px rgba(0,0,0,0.3); } 100% { box-shadow: 0 12px 40px rgba(0,255,255,0.2); } } 
- 
-        .user-message .message-bubble { 
-            background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 100%); 
-            color: var(--bg-primary); border-radius: 24px 24px 8px 24px; margin-left: 20px; 
-        } 
- 
-        .ai-message .message-bubble { 
-            background: var(--bg-glass); border: 1px solid var(--border-glow); 
-            border-radius: 24px 24px 24px 8px; margin-right: 20px; 
-        } 
- 
-        .message-time { font-size: 12px; color: var(--text-secondary); margin-top: 8px; opacity: 0.7; } 
- 
-        /* --- Code Blocks with Toolbar (Agnes Ultra 3.0 - Combined Best) --- */ 
-        .code-block-wrapper { position: relative; margin: 16px 0; } 
-        .code-toolbar { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 12px 20px; background: #011627; /* Darker background for toolbar */ 
-            border-top-left-radius: 12px; border-top-right-radius: 12px; 
-            border: 1px solid var(--border-glow); /* Stronger border glow */ 
-            border-bottom: none; 
-        } 
-        .code-language { 
-            font-family: 'Fira Code', monospace; font-size: 14px; 
-            font-weight: 600; color: var(--neon-green); 
-        } 
-        .code-actions { display: flex; gap: 8px; } 
-        .code-action-btn { 
-            background: rgba(0, 255, 255, 0.1); border: 1px solid var(--border-glow); 
-            color: var(--neon-cyan); padding: 8px 12px; border-radius: 8px; 
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Agnes's smoother transitions */ 
-            font-size: 14px; display: flex; align-items: center; justify-content: center; 
-        } 
-        .code-action-btn:hover { 
-            background: rgba(0, 255, 255, 0.3); box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); 
-            transform: translateY(-2px) scale(1.05); /* More engaging hover */ 
-        } 
-        .code-action-btn.success { /* For copy confirmation */ 
-            background: rgba(0, 255, 127, 0.3); color: #00FF7F; 
-        } 
- 
-        .ai-message pre { 
-            background: #011627 !important; /* Ensuring highlight.js dark theme */ 
-            border: 1px solid var(--border-glow); 
-            border-radius: 12px; 
-            padding: 20px !important; 
-            margin: 0 !important; /* No extra margin after toolbar */ 
-            overflow-x: auto; 
-            direction: ltr; /* Code always LTR */ 
-            border-top-left-radius: 0 !important; border-top-right-radius: 0 !important; 
-            border-top: none !important; /* Blends with toolbar */ 
-        } 
-        .ai-message code { 
-            color: #89ddff; font-family: 'Fira Code', 'Cascadia Code', monospace; /* Agnes Original Fira Code */ 
-            font-size: 14px; line-height: 1.6; 
-        } 
- 
-        /* --- TOOL STATUS INDICATOR (Agnes Ultra 3.0 - The Innovation) --- */ 
-        .tool-status-indicator { 
-            position: fixed; bottom: var(--input-height); left: 0; right: 0; 
-            height: 40px; background: rgba(124, 58, 237, 0.2); /* Neon purple background */ 
-            border-top: 1px solid rgba(124, 58, 237, 0.4); 
-            color: var(--text-primary); font-size: 14px; 
-            display: flex; align-items: center; padding: 0 32px; 
-            opacity: 0; transform: translateY(100%); visibility: hidden; 
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Agnes's smoother transitions */ 
-            z-index: 999; overflow: hidden; 
-        } 
- 
-        .tool-status-indicator.active { 
-            opacity: 1; transform: translateY(0); visibility: visible; 
-        } 
- 
-        .status-bar { /* Animated progress bar */ 
-            position: absolute; top: 0; left: 0; width: 150%; height: 100%; 
-            background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); 
-            animation: statusBarFlow 2s linear infinite; opacity: 0.8; 
-        } 
-        @keyframes statusBarFlow { 
-            0% { transform: translateX(-100%); } 
-            100% { transform: translateX(100%); } 
-        } 
-        .status-text { position: relative; z-index: 1; font-weight: 600; } 
- 
- 
-        /* ========================================================================== 
-           INPUT SYSTEM - نظام الإدخال المتطور (Agnes Original Perfection) 
-           ========================================================================== */ 
-        .input-container { 
-            position: fixed; bottom: 0; left: 0; right: 0; height: var(--input-height); 
-            background: var(--bg-glass); 
-            backdrop-filter: blur(25px); 
-            border-top: 1px solid var(--border-glow); 
-            padding: 20px 32px; z-index: 1000; 
-        } 
- 
-        .input-wrapper { 
-            display: flex; align-items: flex-end; gap: 16px; 
-            background: var(--bg-secondary); 
-            border: 1px solid var(--border-glow); border-radius: 28px; 
-            padding: 16px 24px; height: 64px; 
+        /* --- Theme Toggle --- */ 
+        .theme-toggle { 
+            position: relative; 
+            width: 40px; 
+            height: 40px; 
+            background: var(--border-color); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
             transition: all 0.3s ease; 
         } 
- 
-        .input-wrapper:focus-within { 
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); /* Stronger glow on focus */ 
-            border-color: var(--neon-cyan); 
+        .theme-toggle:hover { 
+            background: var(--brand-color); 
+            color: white; 
+        } 
+        .theme-toggle i { 
+            font-size: 16px; 
+            transition: transform 0.3s ease; 
+        } 
+        [data-theme="dark"] .theme-toggle i { 
+            transform: rotate(180deg); 
         } 
  
+        /* --- Chat Container --- */ 
+        .chat-container { 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 20px; 
+            scrollbar-width: thin; 
+            scrollbar-color: var(--text-secondary) transparent; 
+        } 
+        .chat-container::-webkit-scrollbar { 
+            width: 6px; 
+        } 
+        .chat-container::-webkit-scrollbar-track { 
+            background: transparent; 
+        } 
+        .chat-container::-webkit-scrollbar-thumb { 
+            background: var(--text-secondary); 
+            border-radius: 3px; 
+        } 
+ 
+        /* --- Welcome Container --- */ 
+        .welcome-container { 
+            max-width: 500px; 
+            text-align: center; 
+            background: var(--secondary-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 16px; 
+            padding: 48px 32px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1); 
+            transition: all 0.3s ease; 
+        } 
+        .welcome-logo { 
+            font-size: 72px; 
+            margin-bottom: 20px; 
+            animation: bounce 2s infinite; 
+        } 
+        .welcome-title { 
+            font-size: 28px; 
+            font-weight: 700; 
+            color: var(--brand-color); 
+            margin-bottom: 12px; 
+        } 
+        .welcome-subtitle { 
+            font-size: 16px; 
+            color: var(--text-secondary); 
+            line-height: 1.6; 
+            margin-bottom: 32px; 
+        } 
+        .welcome-btn { 
+            padding: 12px 28px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            background: var(--brand-color); 
+            color: white; 
+            border: none; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); 
+        } 
+        .welcome-btn:hover { 
+            background: #3B30C4; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4); 
+        } 
+ 
+        /* --- Messages (RTL Fixed) --- */ 
+        .message { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 16px; 
+            width: 100%; 
+            max-width: 900px; 
+            animation: slideIn 0.3s ease-out; 
+        } 
+        @keyframes slideIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        } 
+        .message.user-message { 
+            justify-content: flex-end; 
+        } 
+        .message.ai-message { 
+            justify-content: flex-start; 
+        } 
+        .message-bubble { 
+            max-width: 75%; 
+            padding: 16px 20px; 
+            border-radius: 20px; 
+            line-height: 1.7; 
+            font-size: 16px; 
+            box-shadow: var(--shadow); 
+            position: relative; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word; 
+        } 
+        .user-message .message-bubble { 
+            background: var(--user-bubble-bg); 
+            border-bottom-left-radius: 4px; 
+        } 
+        .ai-message .message-bubble { 
+            background: var(--ai-bubble-bg); 
+            border-bottom-right-radius: 4px; 
+        } 
+        .message-time { 
+            font-size: 12px; 
+            color: var(--text-secondary); 
+            margin-top: 8px; 
+            opacity: 0.8; 
+        } 
+        .message-actions { 
+            display: flex; 
+            gap: 6px; 
+            opacity: 0; 
+            transition: opacity 0.2s ease; 
+            margin-top: 8px; 
+        } 
+        .message:hover .message-actions { 
+            opacity: 1; 
+        } 
+        .message-action-btn { 
+            background: none; 
+            border: none; 
+            color: var(--text-secondary); 
+            font-size: 14px; 
+            cursor: pointer; 
+            padding: 6px; 
+            border-radius: 6px; 
+            transition: all 0.2s ease; 
+        } 
+        .message-action-btn:hover { 
+            color: var(--brand-color); 
+            background: rgba(79, 70, 229, 0.1); 
+        } 
+ 
+        /* --- Code Blocks (Enhanced) --- */ 
+        .ai-message pre { 
+            background: var(--code-bg) !important; 
+            color: var(--code-text) !important; 
+            border-radius: 12px; 
+            padding: 16px !important; 
+            margin: 12px 0 !important; 
+            overflow-x: auto; 
+            direction: ltr; 
+            font-size: 14px; 
+            line-height: 1.6; 
+            border: 1px solid rgba(255,255,255,0.1); 
+        } 
+        .code-block-wrapper { 
+            margin: 12px 0; 
+            border-radius: 12px; 
+            overflow: hidden; 
+        } 
+        .code-toolbar { 
+            background: rgba(0,0,0,0.3); 
+            color: var(--code-text); 
+            padding: 10px 16px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 14px; 
+            font-family: 'Cairo', sans-serif; 
+        } 
+        .code-language { 
+            font-weight: 600; 
+        } 
+        .code-actions .code-action-btn { 
+            color: var(--code-text); 
+            font-size: 14px; 
+            padding: 8px; 
+            border-radius: 6px; 
+        } 
+        .code-actions .code-action-btn:hover { 
+            background: rgba(255,255,255,0.2); 
+        } 
+ 
+        /* --- Input Area --- */ 
+        .input-container { 
+            background: var(--secondary-bg); 
+            border-top: 1px solid var(--border-color); 
+            padding: 20px 24px; 
+            display: flex; 
+            align-items: flex-end; 
+            gap: 12px; 
+            box-shadow: var(--shadow); 
+        } 
         .message-input { 
-            flex: 1; background: transparent; border: none; 
-            color: var(--text-primary); font-size: 16px; font-family: inherit; 
-            resize: none; max-height: 120px; line-height: 1.6; outline: none; 
+            flex-grow: 1; 
+            padding: 14px 20px; 
+            border: 2px solid var(--border-color); 
+            border-radius: 25px; 
+            font-family: inherit; 
+            font-size: 16px; 
+            color: var(--text-color); 
+            background: var(--secondary-bg); 
+            resize: none; 
+            max-height: 120px; 
+            outline: none; 
+            transition: all 0.3s ease; 
+            direction: rtl; 
         } 
-        .message-input::placeholder { color: var(--text-secondary); } 
- 
-        .input-buttons { display: flex; gap: 12px; } 
- 
-        .input-btn { 
-            width: 48px; height: 48px; border-radius: 16px; 
-            background: rgba(0, 255, 255, 0.1); border: 1px solid var(--border-glow); 
-            color: var(--neon-cyan); cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            display: flex; align-items: center; justify-content: center; 
+        .message-input:focus { 
+            border-color: var(--brand-color); 
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); 
         } 
- 
-        .input-btn:hover { 
-            background: rgba(0, 255, 255, 0.25); box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); 
-            transform: scale(1.1); 
+        .message-input::placeholder { 
+            color: var(--text-secondary); 
         } 
- 
         .send-btn { 
-            background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 100%); 
-            color: var(--bg-primary); font-size: 18px; font-weight: 600; 
-            width: 52px; height: 52px; border-radius: 18px; 
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); 
+            background: var(--brand-color); 
+            color: white; 
+            border: none; 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 18px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            flex-shrink: 0; 
+        } 
+        .send-btn:hover:not(:disabled) { 
+            background: #3B30C4; 
+            transform: scale(1.05); 
+        } 
+        .send-btn:disabled { 
+            background: var(--text-secondary); 
+            cursor: not-allowed; 
+            transform: none; 
+        } 
+        .send-btn.loading { 
+            animation: pulse 1.5s infinite; 
+        } 
+        @keyframes pulse { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0.5; } 
         } 
  
-        .send-btn:hover { 
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); transform: scale(1.15) rotate(10deg); 
-        } 
- 
-        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; } 
- 
-        /* ========================================================================== 
-           INPUT TOOLS POPOVER - أدوات الإدخال المتعددة المتطورة (Agnes Original Perfection) 
-           ========================================================================== */ 
-        .input-tools-popover { 
-            position: fixed; bottom: calc(var(--input-height) + 20px); left: 50%; 
-            transform: translateX(-50%) scale(0.95); 
-            background: var(--bg-glass); backdrop-filter: blur(25px); 
-            border: 1px solid var(--border-glow); border-radius: 20px; 
-            padding: 20px; display: flex; gap: 16px; 
-            opacity: 0; visibility: hidden; pointer-events: none; 
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            box-shadow: 0 20px 60px (0, 255, 255, 0.25); 
-            z-index: 999; 
-        } 
- 
-        .input-tools-popover.active { 
-            opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: all; 
-        } 
- 
-        .tool-item { 
-            flex: 1; padding: 20px 12px; border-radius: 16px; cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            text-align: center; position: relative; overflow: hidden; 
-        } 
- 
-        .tool-item::before { /* Shimmer effect on hover */ 
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); 
-            transition: opacity 0.3s; 
-        } 
- 
-        .tool-item:hover::before { opacity: 1; } 
- 
-        .tool-item:hover { 
-            background: rgba(0, 255, 255, 0.15); transform: translateY(-8px) scale(1.05); 
-            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3); 
-        } 
- 
-        .tool-item i { 
-            font-size: 28px; color: var(--neon-cyan); margin-bottom: 8px; 
-            filter: drop-shadow(0 0 8px currentColor); 
-        } 
- 
-        .tool-item span { font-size: 13px; font-weight: 500; color: var(--text-primary); } 
- 
-        /* ========================================================================== 
-           TYPING INDICATOR - مؤشر الكتابة المتقدم (Agnes Original Perfection) 
-           ========================================================================== */ 
+        /* --- Typing Indicator (Enhanced) --- */ 
         .typing-indicator { 
-            display: flex; align-items: center; max-width: 80%; 
-            padding: 20px 28px; background: var(--bg-glass); 
-            border: 1px solid var(--border-glow); border-radius: 24px 24px 24px 8px; 
-            margin-right: auto; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 14px 20px; 
+            background: var(--ai-bubble-bg); 
+            border-radius: 20px; 
+            max-width: fit-content; 
+            color: var(--text-color); 
+            font-size: 15px; 
+            box-shadow: var(--shadow); 
+            animation: slideIn 0.3s ease-out; 
         } 
- 
-        .typing-dots { display: flex; gap: 8px; margin-right: 20px; } 
- 
+        .typing-avatar { 
+            width: 32px; 
+            height: 32px; 
+            background: var(--brand-color); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-size: 14px; 
+            flex-shrink: 0; 
+        } 
+        .typing-dots { 
+            display: flex; 
+            gap: 6px; 
+        } 
         .typing-dot { 
-            width: 12px; height: 12px; background: var(--neon-cyan); 
-            border-radius: 50%; animation: typingPulse 1.4s infinite ease-in-out; 
-            box-shadow: 0 0 12px currentColor; 
+            width: 10px; 
+            height: 10px; 
+            background: var(--text-secondary); 
+            border-radius: 50%; 
+            animation: typingBounce 1.4s infinite ease-in-out; 
         } 
- 
         .typing-dot:nth-child(2) { animation-delay: 0.2s; } 
         .typing-dot:nth-child(3) { animation-delay: 0.4s; } 
- 
-        @keyframes typingPulse { 
-            0%, 60%, 100% { transform: scale(0.8); opacity: 0.5; } 
-            30% { transform: scale(1.2); opacity: 1; } 
+        @keyframes typingBounce { 
+            0%, 80%, 100% { transform: scale(0.8) translateY(0); } 
+            40% { transform: scale(1.2) translateY(-5px); } 
         } 
  
-        /* ========================================================================== 
-           SIDEBAR & PANELS - القوائم والألواح المتطورة (Agnes Original Perfection) 
-           ========================================================================== */ 
-        .sidebar { 
-            position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; 
-            background: var(--bg-glass); backdrop-filter: blur(25px); 
-            border-left: 1px solid var(--border-glow); 
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            z-index: 1001; overflow-y: auto; padding-bottom: 100px; 
+        /* --- Notifications --- */ 
+        .notification { 
+            position: fixed; 
+            top: 24px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--brand-color); 
+            color: white; 
+            padding: 12px 24px; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: all 0.3s ease; 
+            z-index: 1000; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2); 
         } 
- 
-        .sidebar.open { right: 0; } 
- 
-        .sidebar-header { 
-            padding: 32px 32px 24px; border-bottom: 1px solid rgba(0, 255, 255, 0.1); 
-            display: flex; justify-content: space-between; align-items: center; 
+        .notification.show { 
+            opacity: 1; 
+            visibility: visible; 
+            transform: translateX(-50%) translateY(0); 
         } 
+        .notification.error { background: #EF4444; } 
+        .notification.success { background: #10B981; } 
  
-        .sidebar-header h3 { 
-            font-size: 24px; font-weight: 700; 
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green)); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-        } 
- 
-        .sidebar-menu { list-style: none; padding: 0 32px; } 
- 
-        .sidebar-menu-item { 
-            padding: 20px 0; display: flex; align-items: center; gap: 16px; 
-            color: var(--text-secondary); cursor: pointer; 
-            transition: all 0.3s ease; border-radius: 12px; margin-bottom: 8px; font-weight: 500; 
-        } 
- 
-        .sidebar-menu-item:hover { 
-            background: rgba(0, 255, 255, 0.1); color: var(--neon-cyan); padding-left: 16px; 
-            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1); 
-        } 
- 
-        .sidebar-footer { 
-            position: absolute; bottom: 32px; left: 32px; right: 32px; 
-            text-align: center; color: var(--text-secondary); font-size: 14px; 
-            border-top: 1px solid rgba(0, 255, 255, 0.1); padding-top: 20px; 
-        } 
- 
-        /* Dashboard Panel (Agnes Original Perfection) */ 
-        .dashboard-panel { 
-            position: fixed; top: var(--header-height); right: -100%; width: 500px;  
-            height: calc(100% - var(--header-height) - var(--input-height));  
-            background: var(--bg-glass); backdrop-filter: blur(25px);  
-            border-left: 1px solid var(--border-glow);  
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);  
-            z-index: 1001; padding: 40px; overflow-y: auto;  
-        }  
-  
-        .dashboard-panel.active { right: 0; }  
-  
-        .dashboard-toggle-btn {  
-            position: absolute; top: 20px; right: 20px;  
-            width: 48px; height: 48px; border-radius: 12px;  
-            background: rgba(0, 255, 255, 0.2); border: 1px solid var(--border-glow);  
-            color: var(--neon-cyan); cursor: pointer; z-index: 1002;  
-            display: flex; align-items: center; justify-content: center; /* تأكد من توسط الأيقونة */ 
-        }   
-   
-        /* ==========================================================================   
-           NOTIFICATIONS & OVERLAY - الإشعارات والتراكب (Agnes Original Perfection)   
-           ========================================================================== */   
-        .overlay {   
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;   
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);   
-            opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 999;   
-        }   
-   
-        .overlay.active { opacity: 1; visibility: visible; }   
-   
-        .notification {   
-            position: fixed; top: calc(var(--header-height) + 20px); left: 20px;   
-            padding: 16px 24px;   
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));   
-            color: var(--bg-primary); border-radius: 12px; font-weight: 600;   
-            box-shadow: 0 12px 40px rgba(0, 255, 255, 0.4);   
-            transform: translateX(-400px);   
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);   
-            z-index: 1002;   
-        }   
-   
-        .notification.show { transform: translateX(0); }   
-   
-        .notification.success { background: linear-gradient(135deg, #00FF7F, #00D46F); }   
-        .notification.error { background: linear-gradient(135deg, #FF6B6B, #FF5252); }   
-   
-        /* ==========================================================================   
-           SUGGESTIONS - الاقتراحات الذكية (Agnes Original Perfection)   
-           ========================================================================== */   
-        .suggestions-panel {   
-            display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0;   
-            padding: 20px; background: rgba(0, 255, 255, 0.05);   
-            border: 1px solid var(--border-glow); border-radius: 16px;   
-            backdrop-filter: blur(10px);   
-        }   
-   
-        .suggestion-chip {   
-            padding: 12px 20px; background: rgba(0, 255, 255, 0.15);   
-            border: 1px solid var(--border-glow); border-radius: 25px;   
-            color: var(--neon-cyan); font-weight: 500; cursor: pointer;   
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);   
-            backdrop-filter: blur(10px);   
-        }   
-   
-        .suggestion-chip:hover {   
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));   
-            color: var(--bg-primary); transform: translateY(-2px) scale(1.05);   
-            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.4);   
-        }   
-   
-        /* ==========================================================================   
-           RESPONSIVE DESIGN - تصميم متجاوب متقدم (Agnes Original Perfection)   
-           ========================================================================== */   
-        @media (max-width: 900px) {   
-            .dashboard-panel { width: 100%; }   
-            .dashboard-toggle-btn { left: 20px; right: auto; } /* نقل زر الإغلاق لليسار */  
-            .notification { left: auto; right: 20px; transform: translateX(400px); } /* نقل الإشعارات لليمين */  
-            .notification.show { transform: translateX(0); }  
-        }  
-        @media (max-width: 768px) {   
-            :root { --header-height: 70px; --input-height: 80px; }   
-            .header { padding: 0 20px; } .logo-gradient { font-size: 24px; }   
-            .chat-container { padding: calc(var(--header-height) + 20px) 20px 20px; }   
-            .input-container { padding: 16px 20px; }   
-            .message-bubble { max-width: 90%; padding: 18px 22px; }   
-            .input-tools-popover { bottom: calc(var(--input-height) + 16px); width: 95%; flex-wrap: wrap; padding: 16px; }   
-            .sidebar { width: 100%; right: -100%; }   
-            .welcome-container { margin: 20px; padding: 40px 24px; }   
-            .welcome-logo { font-size: 60px; } .welcome-title { font-size: 28px; }   
-        }   
-   
-        @media (max-width: 480px) {   
-            .header { padding: 0 16px; }   
-            .header-icon { width: 42px; height: 42px; }   
-            .input-btn, .send-btn { width: 44px; height: 44px; }   
-            .message-bubble { padding: 16px 20px; max-width: 95%; }   
-        }   
-   
-        /* RTL Optimizations (Agnes Original Perfection) */   
-        .message-actions {   
-            display: flex; /* 🏆 الإصلاح 1.1: تفعيل عرض شريط الإجراءات */
-            gap: 8px; margin-bottom: 8px;   
-            opacity: 0; transform: translateY(-10px); transition: all 0.3s ease;   
-        }   
-        .message:hover .message-actions { opacity: 1; transform: translateY(0); }   
-        .message-action-btn {   
-            width: 36px; height: 36px; border-radius: 10px;   
-            background: rgba(0, 255, 255, 0.15); border: 1px solid var(--border-glow);   
-            color: var(--neon-cyan); cursor: pointer;   
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);   
-            display: flex; align-items: center; justify-content: center;   
-        }   
-        .message-action-btn:hover {   
-            background: rgba(0, 255, 255, 0.3); transform: scale(1.15) rotate(10deg);   
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);   
-        }   
-        /* User Popover positioning for RTL */  
-        .user-popover {  
-            position: absolute; top: calc(100% + 10px); left: 0;  
-            background: var(--bg-glass); backdrop-filter: blur(15px);  
-            border: 1px solid var(--border-glow); border-radius: 16px;  
-            padding: 16px; width: 200px;  
-            opacity: 0; visibility: hidden; pointer-events: none;  
-            transition: all 0.3s ease;  
-        }  
-        .user-popover.active {  
-            opacity: 1; visibility: visible; pointer-events: all; transform: translateY(0);  
-        }  
-        .user-popover-item {  
-            display: flex; align-items: center; gap: 12px; padding: 10px;  
-            cursor: pointer; transition: all 0.3s ease; border-radius: 8px;  
-            color: var(--text-secondary);  
-        }  
-        .user-popover-item:hover {  
-            background: rgba(0, 255, 255, 0.1); color: var(--neon-cyan);  
-        } 
-   
-        /* Collaboration Bar (Agnes Original Perfection) */   
-        .collaboration-bar {   
-            position: fixed; bottom: var(--input-height); left: 0; right: 0;   
-            background: rgba(0, 255, 255, 0.1); backdrop-filter: blur(20px);   
-            border-top: 1px solid var(--border-glow); padding: 12px 24px;   
-            font-size: 14px; color: var(--text-secondary);   
-            display: none; align-items: center; gap: 12px;   
-        }   
-        .collaboration-bar.active { display: flex; }   
-   
-        /* CSS جديد لـ Agnes Ultra 3.0 - محرك الذاكرة التعاونية */   
-        .memory-item {   
-            padding: 12px 16px;    
-            background: rgba(0, 255, 255, 0.05);   
-            border-radius: 12px;    
-            margin-bottom: 12px;   
-            border-right: 3px solid var(--neon-cyan); /* Neon glow */   
-            cursor: pointer;   
-            transition: all 0.3s ease;   
-        }   
-        .memory-item:hover {   
-            background: rgba(0, 255, 255, 0.15);   
-            transform: translateX(-5px);   
-            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);   
-        }   
-        .memory-badge {   
-            display: inline-block;   
-            padding: 4px 8px;   
-            border-radius: 20px;   
-            font-size: 11px;   
-            font-weight: 600;   
-            margin-right: 8px; /* تغيير من margin-left ليتناسب مع RTL */  
-            line-height: 1;   
-        }   
-        .badge-entity { background: rgba(0, 255, 255, 0.2); color: var(--neon-cyan); }   
-        .badge-task { background: rgba(0, 255, 127, 0.2); color: var(--neon-green); }   
-        .badge-concept { background: rgba(255, 0, 255, 0.2); color: var(--neon-purple); }   
-        .memory-stats-bar {   
-            display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;   
-        }   
-        .memory-stat {   
-            background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 8px;   
-            font-size: 12px; border: 1px solid rgba(255,255,255,0.1);   
-        }   
-           
-    </style>   
-</head>   
-<body class="cyan-theme">    
-    <div class="header">    
-        <div class="app-name">    
-            <div class="header-icon" id="menuBtn" title="القائمة">    
-                <i class="fas fa-bars"></i>    
-            </div>    
-            <span class="logo-gradient" id="logoText">Aladan AI - الإصدار الأقوى 🏆</span>    </div>    
-        <div class="header-icons">    
-            <div class="header-icon" id="themeToggleBtn" title="تبديل الثيم">    
-                <i class="fas fa-palette"></i>    
-            </div>    
-             <div class="header-icon" id="memoryBtn" title="الذاكرة الذكية">    
-                <i class="fas fa-brain"></i>    
-            </div>    
-            <div class="header-icon" id="dashboardToggleBtn" title="لوحة الإنتاجية">    
-                <i class="fas fa-grip-vertical"></i>    
-            </div>    
-            <div class="header-icon" id="userBtn" title="الحساب">    
-                <i class="fas fa-user-circle"></i>    
-                <div class="user-popover" id="userPopover">    
-                    <div class="user-popover-header" style="font-weight: 600; margin-bottom: 16px; color: var(--text-primary);">مرحباً، aladdan! 👋</div>    
-                    <div class="user-popover-item" onclick="aladan.showNotification('إعدادات الحساب قريباً...', 'info')">    
-                        <i class="fas fa-user-cog"></i>    
-                        <span>إدارة الحساب</span>    
-                    </div>    
-                    <div class="user-popover-item" onclick="aladan.showNotification('تم تسجيل الخروج بنجاح', 'success')">    
-                        <i class="fas fa-sign-out-alt"></i>    
-                        <span>تسجيل الخروج</span>    
-                    </div>    
-                </div>    
-            </div>    
-        </div>    
-    </div>    
-    
-    <div class="dashboard-panel" id="dashboardPanel">    
-        <button class="dashboard-toggle-btn" onclick="aladan.toggleDashboard(false)" title="إغلاق">    
-            <i class="fas fa-times"></i>    
-        </button>    
-        <h4 style="margin-bottom: 32px; font-size: 28px; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">مركزك الذكي 🚀</h4>    
-        <div class="dashboard-item" style="display: flex; align-items: center; gap: 16px; padding: 20px; background: rgba(0,255,255,0.05); border-radius: 16px; margin-bottom: 16px; border-right: 4px solid var(--neon-cyan); cursor: pointer; transition: all 0.3s ease;">    
-            <i class="fas fa-arrow-left fa-2x" style="color: var(--neon-cyan);"></i>    
-            <span style="flex: 1; font-weight: 500;">📋 تخطيط استراتيجية الربع الرابع</span>    
-        </div>    
-        <div class="dashboard-item" style="display: flex; align-items: center; gap: 16px; padding: 20px; background: rgba(0,255,127,0.05); border-radius: 16px; margin-right: 16px; border-right: 4px solid var(--neon-green); cursor: pointer; transition: all 0.3s ease;">    
-            <i class="fas fa-lightbulb fa-2x" style="color: var(--neon-green);"></i>    
-            <span style="flex: 1; font-weight: 500;">💡 حملة تسويقية جديدة</span>    
-        </div>    
-        </div>    
-    
-    <div class="chat-container" id="chatContainer">    
-        <div class="welcome-container" id="welcomeMessage">    
-            <div class="welcome-logo">🏆</div>    
-            <div class="welcome-title">مرحباً بك في تطبيق aladdan</div>    <div class="welcome-subtitle">    
-                مساعدك الذكي لتسجيل الأفكار العابرة، توضيح الأولويات، والحفاظ على التوازن العاطفي.<br>    
-                <small style="opacity: 0.8;">مدعوم من Sapiens AI ✨</small>    </div>    
-            <div class="welcome-actions">    
-                <button class="welcome-btn" onclick="aladan.sendPredefinedMessage('كيف يمكنك مساعدتي اليوم؟')">كيف يمكنك مساعدتي اليوم؟</button>    
-                <button class="welcome-btn" onclick="aladan.sendPredefinedMessage('أخبرني عن مميزاتك.')">أخبرني عن مميزاتك</button>    
-                <button class="welcome-btn" onclick="aladan.sendPredefinedMessage('اقترح فكرة جديدة.')">اقترح فكرة جديدة</button>    
-            </div>    
-        </div>    
-    </div>    
-    
-    <div class="input-container">    
-        <div class="input-wrapper">    
-            <button class="input-btn" id="attachBtn" title="أدوات الإدخال">    
-                <i class="fas fa-paperclip"></i>    
-            </button>    
-            <textarea    
-                class="message-input"    
-                id="messageInput"    
-                placeholder="اكتب رسالتك هنا... (اضغط Shift+Enter للسطر الجديد)"    
-                rows="1"    
-                maxlength="5000"    ></textarea>    
-            <div class="input-buttons">    
-                <button class="input-btn" id="micBtn" title="التسجيل الصوتي">    
-                    <i class="fas fa-microphone"></i>   
-                </button>    
-                <button class="input-btn send-btn" id="sendBtn" title="إرسال">    
-                    ➤    
-                </button>    
-            </div>    
-        </div>    
-    </div>    
-    
-    <div class="input-tools-popover" id="inputToolsPopover">    
-        <div class="tool-item" onclick="aladan.handleToolAction('image')" title="إرفاق صورة">    
-            <i class="fas fa-image"></i>    
-            <span>صورة</span>    
-        </div>    
-        <div class="tool-item" onclick="aladan.handleToolAction('file')" title="رفع ملف">    
-            <i class="fas fa-file-upload"></i>    
-            <span>مستند</span>    
-        </div>    
-        <div class="tool-item" onclick="aladan.handleToolAction('create_table')" title="إنشاء جدول"> <i class="fas fa-table"></i>    
-            <span>جدول</span>    
-        </div>    
-        <div class="tool-item" onclick="aladan.handleToolAction('draw')" title="الرسم">    
-            <i class="fas fa-pencil-alt"></i>    
-            <span>رسم</span>    
-        </div>    
-    </div>    
-    
-    <div class="sidebar" id="sidebar">    
-        <div class="sidebar-header">    
-            <h3>قائمة Aladan</h3>    
-            <button class="sidebar-close" id="sidebarCloseBtn" title="إغلاق">    
-                <i class="fas fa-times"></i>    
-            </button>    
-        </div>    
-        <ul class="sidebar-menu">    
-            <li class="sidebar-menu-item" id="loadChats">    
-                <i class="fas fa-history"></i>    
-                <span>المحادثات السابقة</span>    
-            </li>    
-            <li class="sidebar-menu-item">    
-                <i class="fas fa-star"></i>    
-                <span>المفضلة</span>    
-            </li>    
-            <li class="sidebar-menu-item">    
-                <i class="fas fa-cogs"></i>    
-                <span>إدارة الوكلاء</span>    
-            </li>    
-            <li class="sidebar-menu-item">    
-                <i class="fas fa-cog"></i>    
-                <span>الإعدادات</span>    
-            </li>    
-            <li class="sidebar-menu-item" style="color: #FF6B6B;" id="clearChat">    
-                <i class="fas fa-trash"></i>    
-                <span>مسح المحادثة</span>    
-            </li>    
-            <li class="sidebar-menu-item">    
-                <i class="fas fa-question-circle"></i>    
-                <span>المساعدة</span>    
-            </li>    
-        </ul>    
-        <div class="sidebar-footer">    
-            <span>Aladan AI © 2025 | صنع بحب من Sapiens AI</span>    
-        </div>    
-    </div>    
-   
-    <div class="overlay" id="overlay"></div>    
-    
-    <div class="notification" id="notification"></div>    
-    
-    <div class="collaboration-bar" id="collaborationBar">    
-        <div style="display: flex; align-items: center;">   
-            <i class="fas fa-users"></i>   
-            <span id="collaborationBarText">مساحة عمل تعاونية نشطة. </span>   
-        </div>   
-        <span style="text-decoration: underline; cursor: pointer; color: var(--neon-cyan); font-weight: 500;" onclick="aladan.showMemoryDashboard()">عرض الذاكرة</span>    
-    </div>    
-    
-    <div class="tool-status-indicator" id="toolStatusIndicator">    
-        <div class="status-bar"></div>    
-        <span class="status-text" id="statusText">جاري التحميل...</span>    
-    </div>    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>    
-    <script>    
-        // ==========================================================================    
-        // ALADDAN AI JAVASCRIPT ENGINE - الفائز المطلق في التحدي!    
-        // ==========================================================================    
-            
-        // 🔥 Mock UUID Generator    
-        function generateUUID() {    
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {    
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);    
-                return v.toString(16);    
-            });    
-        }    
-    
-        // 🔥 NEW: Tool Manager Class - محرك استدعاء الأدوات الوهمي    
-        class ToolManager {    
-            constructor(aladanInstance) {    
-                this.aladan = aladanInstance;    
-                this.availableTools = {    
-                    'create_table': {    
-                        description: "ينشئ جدول بيانات أو يضيف بيانات إلى جدول موجود.",    
-                        parameters: { type: 'object', properties: { columns: { type: 'array' }, rows: { type: 'array' } } }    
-                    },    
-                    'schedule_event': {    
-                        description: "لجدولة موعد أو حدث في التقويم.",    
-                        parameters: { type: 'object', properties: { title: { type: 'string' }, date: { type: 'string' }, time: { type: 'string' } } }    
-                    },    
-                    'send_email': {   
-                        description: "يرسل بريدًا إلكترونيًا.",   
-                        parameters: { type: 'object', properties: { to: { type: 'string' }, subject: { type: 'string' }, body: { type: 'string' } } }   
-                    }, 
-                    'search_web': { // 🔥 أداة بحث الويب الجديدة 
-                        description: "يبحث في الويب عن معلومات.", 
-                        parameters: { type: 'object', properties: { query: { type: 'string' } } } 
-                    }, 
-                    'image_generation': { // 🔥 أداة توليد الصور 
-                        description: "يولد صورة بناءً على وصف.", 
-                        parameters: { type: 'object', properties: { prompt: { type: 'string' } } } 
-                    } 
-                };    
-            }    
-    
-            // 💡 يحاكي التنفيذ الفعلي للأداة    
-            async executeTool(toolName, args) {    
-                this.aladan.showToolStatus(`جاري استخدام الأداة: ${toolName}...`);    
-                await this.aladan.delay(1000 + Math.random() * 1000); // محاكاة وقت المعالجة    
-    
-                if (toolName === 'create_table') {    
-                    const tableResult = this.createTable(args);    
-                    return { success: true, result: tableResult };    
-                }    
-                if (toolName === 'schedule_event') {    
-                    const scheduleResult = this.scheduleEvent(args);    
-                    return { success: true, result: scheduleResult };    
-                }    
-                if (toolName === 'send_email') {  
-                    const emailResult = this.sendEmail(args);  
-                    return { success: true, result: emailResult };  
-                }  
-                if (toolName === 'search_web') { // 🔥 تنفيذ أداة البحث 
-                    const searchResult = this.searchWeb(args); 
-                    return { success: true, result: searchResult }; 
-                } 
-                if (toolName === 'image_generation') { // 🔥 تنفيذ أداة توليد الصور 
-                    const imageResult = this.generateImage(args); 
-                    return { success: true, result: imageResult }; 
-                } 
-                return { success: false, result: `الأداة "${toolName}" غير مدعومة حالياً.` };    
-            }    
-   
-            // 🛠️ وظيفة وهمية: إنشاء جدول    
-            createTable(args) {    
-                const numCols = args.columns ? args.columns.length : 3;    
-                const numRows = args.rows ? args.rows.length : 5;    
-                return `**تم إنشاء جدول جديد!**\n\n\`\`\`markdown\n| ${Array(numCols).fill('العنوان').join(' | ')} |\n| ${Array(numCols).fill('---').join(' | ')} |\n| ${Array(numRows).fill(Array(numCols).fill('بيانات').join(' | ')).join(' |\n| ')} |\n\`\`\`\n\n(تمت محاكاة البيانات بناءً على طلبك)`;    
-            }    
-              
-            // 🛠️ وظيفة وهمية: جدولة حدث    
-            scheduleEvent(args) {    
-                const { title, date, time } = args;    
-                this.aladan.showNotification(`تم جدولة: ${title} في ${date} ${time}! 📅`, 'success');    
-                return `تمت إضافة **${title}** إلى تقويمك بنجاح في ${date} الساعة ${time}.`;    
-            }    
-            // 🛠️ وظيفة وهمية: إرسال بريد إلكتروني  
-            sendEmail(args) {  
-                const { to, subject, body } = args;  
-                this.aladan.showNotification(`تم إرسال بريد إلكتروني إلى ${to} بعنوان: ${subject} ✉️`, 'success');  
-                return `**تم إرسال بريد إلكتروني بنجاح!**\n\nإلى: ${to}\nالموضوع: ${subject}\nالنص: ${body.substring(0, 50)}...`;  
-            }  
-            // 🛠️ وظيفة وهمية: بحث الويب 
-            searchWeb(args) { 
-                const { query } = args; 
-                this.aladan.showNotification(`جاري البحث في الويب عن: ${query} 🔍`, 'info'); 
-                return `**نتائج البحث عن "${query}"**:\n\n- نتيجة 1: موقع يوضح كذا وكذا.\n- نتيجة 2: مقال يتحدث عن ...\n- نتيجة 3: فيديو تعليمي.\n\n(نتائج محاكاة من بحث الويب)`; 
+        /* --- Responsive Design --- */ 
+        @media (max-width: 768px) { 
+            .header { padding: 16px 20px; } 
+            .chat-container { padding: 16px; gap: 16px; } 
+            .welcome-container {  
+                margin: 0 16px; 
+                padding: 32px 24px; 
             } 
-            // 🛠️ وظيفة وهمية: توليد الصور 
-            generateImage(args) { 
-                const { prompt } = args; 
-                this.aladan.showNotification(`جاري توليد صورة لـ: ${prompt} 🖼️`, 'info'); 
-                return `**تم توليد الصورة المطلوبة!**\n\n![صورة لـ ${prompt}](https://picsum.photos/400/250?random=${Math.random()})\n\n(صورة محاكاة من خدمة توليد الصور)`; 
+            .welcome-logo { font-size: 56px; } 
+            .welcome-title { font-size: 24px; } 
+            .message-bubble {  
+                max-width: 90%; 
+                padding: 14px 18px; 
+                font-size: 15px; 
             } 
-        }   
-   
-        class AladanAI {   
-            constructor() {   
-                this.initElements();   
-                this.toolManager = new ToolManager(this); // 🔥 تهيئة Tool Manager   
-                this.state = {   
-                    isTyping: false,   
-                    isRecording: false,   
-                    chatHistory: [],   
-                    isMobile: window.innerWidth <= 768,   
-                    currentThemeIndex: 0,   
-                    themes: ['cyan', 'purple', 'green', 'orange', 'rainbow'],   
-                    contextMemory: {   
-                        entities: {}, concepts: {}, tasks: {}, decisions: {}, relationships: []   
-                    },   
-                    memoryStats: {   
-                        totalEntities: 0, totalTasks: 0, totalConcepts: 0, activeTasks: 0   
-                    }   
-                };   
-                   
-                this.loadState();   
-                this.initEventListeners();   
-                this.startBackgroundAnimations();   
-                this.focusInput();   
-                this.renderInitialChatHistory();   
-                this.updateMemoryStats();   
-            }   
-   
-            initElements() {   
-                this.elements = {   
-                    chatContainer: document.getElementById('chatContainer'),   
-                    messageInput: document.getElementById('messageInput'),   
-                    sendBtn: document.getElementById('sendBtn'),   
-                    welcomeMessage: document.getElementById('welcomeMessage'),   
-                    notification: document.getElementById('notification'),   
-                    menuBtn: document.getElementById('menuBtn'),   
-                    sidebar: document.getElementById('sidebar'),   
-                    sidebarCloseBtn: document.getElementById('sidebarCloseBtn'),   
-                    overlay: document.getElementById('overlay'),   
-                    userBtn: document.getElementById('userBtn'),   
-                    userPopover: document.getElementById('userPopover'),   
-                    dashboardToggleBtn: document.getElementById('dashboardToggleBtn'),   
-                    dashboardPanel: document.getElementById('dashboardPanel'),   
-                    micBtn: document.getElementById('micBtn'),   
-                    attachBtn: document.getElementById('attachBtn'),   
-                    inputToolsPopover: document.getElementById('inputToolsPopover'),   
-                    loadChats: document.getElementById('loadChats'),   
-                    clearChat: document.getElementById('clearChat'),   
-                    collaborationBar: document.getElementById('collaborationBar'),   
-                    logoText: document.getElementById('logoText'),   
-                    themeToggleBtn: document.getElementById('themeToggleBtn'),   
-                    toolStatusIndicator: document.getElementById('toolStatusIndicator'),   
-                    statusText: document.getElementById('statusText'),   
-                    memoryBtn: document.getElementById('memoryBtn'),  
-                    collaborationBarText: document.getElementById('collaborationBarText')  
-                };   
-            }   
-   
-            initEventListeners() {   
-                this.elements.sendBtn.addEventListener('click', () => this.sendMessage());   
-                this.elements.messageInput.addEventListener('keypress', (e) => {   
-                    if (e.key === 'Enter' && !e.shiftKey) {   
-                        e.preventDefault();   
-                        this.sendMessage();   
-                    }   
-                });   
-   
-                // ✅ إصلاح مشكلة عدم استجابة الأزرار الرئيسية   
-                this.elements.messageInput.addEventListener('input', (e) => {   
-                    e.target.style.height = 'auto';   
-                    e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';   
-                    // تفعيل زر الإرسال عند وجود نص   
-                    this.elements.sendBtn.disabled = e.target.value.trim().length === 0;   
-                });   
-   
-                this.elements.attachBtn.addEventListener('click', (e) => {   
-                    this.elements.inputToolsPopover.classList.toggle('active');   
-                    e.stopPropagation();  
-                });   
-   
-                document.addEventListener('click', (e) => this.handleOutsideClick(e));   
-   
-                this.elements.menuBtn.addEventListener('click', () => this.toggleSidebar(true));   
-                this.elements.sidebarCloseBtn.addEventListener('click', () => this.toggleSidebar(false));   
-                this.elements.overlay.addEventListener('click', () => this.closeAllPanels());   
-   
-                this.elements.micBtn.addEventListener('click', () => this.toggleVoiceRecording());   
-   
-                this.elements.loadChats.addEventListener('click', () => this.loadPastConversation());   
-                this.elements.clearChat.addEventListener('click', () => this.clearConversation());   
-   
-                this.elements.dashboardToggleBtn.addEventListener('click', () => this.toggleDashboard());   
-   
-                this.elements.userBtn.addEventListener('click', (e) => {   
-                    this.elements.userPopover.classList.toggle('active');   
-                    e.stopPropagation();   
-                });   
-   
-                // ✅ إصلاح مشكلة عدم تغيير الثيم   
-                this.elements.themeToggleBtn.addEventListener('click', () => this.cycleTheme());   
-   
-                if (this.elements.memoryBtn) {   
-                    this.elements.memoryBtn.addEventListener('click', () => this.showMemoryDashboard());   
-                }   
-                  
-                // التأكد من تعطيل زر الإرسال في البداية   
-                this.elements.sendBtn.disabled = true;   
-            }   
-              
-            // ✅ دالة تطبيق الثيم (مصححة)   
-            applyTheme(theme) {   
-                this.state.themes.forEach(t => document.body.classList.remove(`${t}-theme`));   
-                document.body.classList.add(`${theme}-theme`);   
-                this.elements.logoText.textContent = `Aladan AI - الإصدار الأقوى 🏆 (${theme.toUpperCase()})`;   this.state.currentThemeIndex = this.state.themes.indexOf(theme);   
-                this.saveState();   
-            }   
-   
-            // ✅ دالة تبديل الثيم (مصححة)   
-            cycleTheme() {   
-                let newIndex = (this.state.currentThemeIndex + 1) % this.state.themes.length;   
-                this.applyTheme(this.state.themes[newIndex]);   
-                this.showNotification(`تم تغيير الثيم إلى: ${this.state.themes[newIndex].toUpperCase()}`, 'info');   
-            }   
-   
-            // ======================================================================   
-            // LOGIC CORE: Send & Simulate AI Response with API & Function Calling   
-            // ======================================================================   
-            async sendMessage() {   
-                const text = this.elements.messageInput.value.trim();   
-                const MAX_LENGTH = 5000;  // ✅ الإصلاح 4: الحد الأقصى للأحرف هو 5000
-                
-                if (!text || this.elements.sendBtn.disabled) return;   
-                
-                // ✅ الإصلاح 4: التحقق الإضافي لعدد الأحرف قبل الإرسال
-                if (text.length > MAX_LENGTH) {
-                    this.showNotification(`خطأ: تجاوز الحد الأقصى المسموح به ${MAX_LENGTH} حرف.`, 'error');
-                    return; 
-                }
-   
-                const messageUUID = generateUUID();   
-                
-                // 🏆 الإصلاح 3.1: حفظ رسالة المستخدم في متغير مؤقت قبل الحفظ النهائي في streamResponse
-                const userMessage = {    
-                    role: 'user',    
-                    parts: [{ text }],    
-                    uuid: messageUUID,    
-                    timestamp: Date.now(),    
-                    knowledgeExtracted: false    
-                };
-                
-                this.addMessage(text, 'user', messageUUID); 
-                this.elements.welcomeMessage.style.display = 'none';   
-                this.elements.messageInput.value = '';   
-                this.elements.messageInput.style.height = 'auto';   
-                this.elements.sendBtn.disabled = true;   
-                this.elements.sendBtn.classList.add('loading');   
-                  
-                this.showTypingIndicator();   
-   
-                try {   
-                    const context = this.getRelevantContext(text); // 🔥 استخدام دالة استخلاص السياق الجديدة (قريباً)   
-                      
-                    // 🔥 الخطوة 1: محاكاة استدعاء الدالة (Function Calling)   
-                    const functionCall = this.mockFunctionCallingAPI(text);   
-                    let aiResponse = null;   
-                     
-                    if (functionCall && this.toolManager.availableTools[functionCall.name]) {   
-                        // تم تحديد أداة: تنفيذ الأداة أولاً   
-                        const toolResult = await this.toolManager.executeTool(functionCall.name, functionCall.args);   
-                          
-                        // 🔥 الخطوة 2: محاكاة رد الـ API بعد تنفيذ الأداة   
-                        aiResponse = `✅ تم تنفيذ ${functionCall.name}.\n\nالناتج:\n${toolResult.result}`;   
-                          
-                    } else {   
-                        // 🔑 التعديل النهائي هنا: استبدال mockAPIResponse باتصال fetch حقيقي   
-                        this.showToolStatus("جاري الاتصال بـ API aladdan لـ الدردشة بطلاقة...");
-                        const apiResponse = await fetch('/api/chat', { 
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                // 🔥 يمكن إضافة مفتاح API هنا إذا كان مطلوباً في Header:
-                                // 'Authorization': 'Bearer YOUR_API_KEY' 
-                            },
-                            body: JSON.stringify({ 
-                                prompt: text, 
-                                history: this.state.chatHistory.slice(-5).map(m => ({ role: m.role, text: m.parts[0].text })), // تحويل السجل إلى صيغة بسيطة
-                                memory_context: context 
-                            }),
-                        });
-
-                        if (!apiResponse.ok) {
-                            throw new Error(`API Error: ${apiResponse.statusText} (${apiResponse.status})`);
-                        }
-
-                        const data = await apiResponse.json();
-                        // 🔑 الرد الفعلي للدردشة بطلاقة
-                        aiResponse = data.response; 
-                    }   
-                      
-                    const aiMessageUUID = generateUUID();   
-                    
-                    // 🏆 الإصلاح 3.2: إرسال رسالة المستخدم المخزنة مؤقتاً إلى streamResponse ليتم حفظها مع رد الـ AI
-                    await this.streamResponse(aiResponse, aiMessageUUID, 'ai', userMessage);   
-                       
-                    this.saveState();   
-                    this.updateMemoryStats();   
-                    this.updateCollaborationBar();   
-   
-                } catch (error) {   
-                    console.error("AI Error:", error);   
-                    const errorMessage = `❌ فشل الاتصال بـ API aladdan. تحقق من مفتاح API و Back-End. (الخطأ: ${error.message})`;
-                    const errorMessageUUID = generateUUID();   
-                    this.addMessage(errorMessage, 'ai', errorMessageUUID);     
-                } finally {   
-                    this.hideToolStatus();   
-                    this.hideTypingIndicator();   
-                    this.elements.sendBtn.disabled = false;   
-                    this.elements.sendBtn.classList.remove('loading');   
-                    this.elements.messageInput.focus();   
-                }   
-            }   
-              
-            // 🔥 NEW: دالة محاكاة استدعاء الدالة (Function Calling)   
-            mockFunctionCallingAPI(text) {   
-                const lowerText = text.toLowerCase();   
-                  
-                if (lowerText.includes('جدول') || lowerText.includes('بيانات')) {   
-                    return {   
-                        name: 'create_table',   
-                        args: {   
-                            columns: ['المنتج', 'الكمية', 'الحالة'],   
-                            rows: []   
-                        }   
-                    };   
-                }   
-                if (lowerText.includes('اجتماع') || lowerText.includes('موعد')) {   
-                    return {   
-                        name: 'schedule_event',   
-                        args: {   
-                            title: 'اجتماع التخطيط الأسبوعي',   
-                            date: '2025-12-22',   
-                            time: '14:00'   
-                        }   
-                    };   
-                }   
-                if (lowerText.includes('إرسال بريد إلكتروني') || lowerText.includes('ايميل')) {  
-                    return {  
-                        name: 'send_email',  
-                        args: {  
-                            to: 'user@example.com',  
-                            subject: 'متابعة من Agnes',  
-                            body: 'مرحباً، بناءً على محادثتنا الأخيرة...'  
-                        }  
-                    };  
-                }  
-                if (lowerText.includes('ابحث عن') || lowerText.includes('ما هو')) { // 🔥 محاكاة استدعاء أداة البحث 
-                    return { 
-                        name: 'search_web', 
-                        args: { query: text.replace(/(?:ابحث عن|ما هو)\s+/iu, '').trim() } 
-                    }; 
-                } 
-                if (lowerText.includes('إنشاء صورة') || lowerText.includes('توليد صورة')) { // 🔥 محاكاة استدعاء أداة توليد الصور 
-                    return { 
-                        name: 'image_generation', 
-                        args: { prompt: text.replace(/(?:إنشاء صورة|توليد صورة)\s+لـ\s+/iu, '').trim() } 
-                    }; 
-                } 
-                return null; // لا توجد أداة   
-            }   
-              
-            // 🔥 NEW: دالة استخلاص السياق (تمثل Context Pruning)   
-            getRelevantContext(text) {   
-                const recentHistory = this.state.chatHistory.slice(-5).map(msg => msg.parts[0].text).join('\n');   
-                return {   
-                    recentMessages: recentHistory,   
-                    activeTasks: this.state.memoryStats.activeTasks,   
-                    activeEntities: Object.values(this.state.contextMemory.entities).slice(0, 3).map(e => e.name),   
-                    currentPrompt: text   
-                };   
-            }   
-              
-            // 🔥 NEW: دالة محاكاة البث الحي للردود   
-            async streamResponse(fullResponse, aiMessageUUID, sender, userMessage = null) {   
-                this.hideTypingIndicator();   
-                
-                // 🏆 الإصلاح 3.3: إضافة رسالة المستخدم إلى الذاكرة الآن (لضمان حفظ الثنائي)
-                if (userMessage) {
-                    this.state.chatHistory.push(userMessage);
-                }
-                
-                const messageDiv = this.createMessageStructure(sender, '');   
-                messageDiv.dataset.messageUuid = aiMessageUUID; // ربط الـ UUID   
-                this.elements.chatContainer.appendChild(messageDiv);   
-                this.scrollToBottom();   
-   
-                const bubbleContent = messageDiv.querySelector('.message-bubble > div:first-child');   
-                let currentText = '';   
-   
-                for (let i = 0; i < fullResponse.length; i++) {   
-                    currentText += fullResponse[i];   
-                    bubbleContent.innerHTML = this.parseMarkdown(currentText);   
-                    this.scrollToBottom();   
-                    if (i % 20 === 0 && fullResponse[i] !== ' ') { // تحديث Highlight.js بشكل دوري   
-                         const codeBlocks = messageDiv.querySelectorAll('pre code');   
-                         codeBlocks.forEach(block => hljs.highlightElement(block));   
-                    }   
-                    await this.delay(15); // سرعة البث   
-                }   
-   
-                // حفظ الرسالة الكاملة في السجل   
-                const enrichedMessage = {   
-                    role: sender,   
-                    parts: [{ text: fullResponse }],   
-                    uuid: aiMessageUUID,   
-                    timestamp: Date.now(),   
-                    knowledgeExtracted: false   
-                };   
-                this.state.chatHistory.push(enrichedMessage);   
-                  
-                // إعادة تمييز الأكواد بعد انتهاء البث   
-                const codeBlocks = messageDiv.querySelectorAll('pre code');   
-                codeBlocks.forEach(block => hljs.highlightElement(block));   
-            }   
-   
-            // ======================================================================   
-            // Knowledge Extraction & Memory (تم التحقق من صحتها)   
-            // ======================================================================   
-   
-            // 🔥 Mock Semantic Parser API Call - محاكاة API لفهم دلالي أعمق   
-            async mockSemanticParsingAPI(text) {   
-                await this.delay(300); // محاكاة استدعاء API   
-                const lowerText = text.toLowerCase();   
-                const extracted = {   
-                    entities: [],   
-                    tasks: [],   
-                    concepts: [],   
-                    relationships: []   
-                };   
-   
-                // محاكاة استخلاص الكيانات بفهم سياقي (أكثر ذكاءً من Regex البسيط)   
-                if (lowerText.includes('منتج')) {   
-                    const productNameMatch = lowerText.match(/(?:منتج|product)\s+([\p{L}\w\d\s\-_]+)/iu);   
-                    if (productNameMatch) extracted.entities.push({ name: productNameMatch[1].trim(), type: 'product', source: text });   
-                    else extracted.entities.push({ name: 'منتج غير محدد', type: 'product', source: text });   
-                }   
-                if (lowerText.includes('مشروع')) {   
-                    const projectNameMatch = lowerText.match(/(?:مشروع|project)\s+([\p{L}\w\d\s\-_]+)/iu);   
-                    if (projectNameMatch) extracted.entities.push({ name: projectNameMatch[1].trim(), type: 'project', source: text });   
-                    else extracted.entities.push({ name: 'مشروع غير محدد', type: 'project', source: text });   
-                }   
-                if (lowerText.includes('العميل')) {   
-                    const clientNameMatch = lowerText.match(/(?:العميل|client)\s+([\p{L}\w\d\s\-_]+)/iu);   
-                    if (clientNameMatch) extracted.entities.push({ name: clientNameMatch[1].trim(), type: 'client', source: text });   
-                    else extracted.entities.push({ name: 'عميل غير محدد', type: 'client', source: text });   
-                }   
-                // استخلاص المهام بفهم للنية   
-                if (lowerText.includes('خطة تسويقية') && lowerText.includes('أحتاج')) {   
-                    extracted.tasks.push({ name: 'إعداد خطة تسويقية', status: 'pending', priority: 'high', source: text });   
-                } else if (lowerText.includes('اجتماع') && lowerText.includes('جدول')) {   
-                    extracted.tasks.push({ name: 'جدولة اجتماع', status: 'pending', priority: 'medium', source: text });   
-                }   
-                // استخلاص المفاهيم   
-                if (lowerText.includes('تحليل السوق')) extracted.concepts.push({ name: 'تحليل السوق', source: text });   
-                if (lowerText.includes('تقارير الأداء')) extracted.concepts.push({ name: 'تقارير الأداء', source: text });   
-   
-                // 🔥 محاكاة استخلاص العلاقات   
-                const productEntity = extracted.entities.find(e => e.type === 'product');   
-                const marketingConcept = extracted.concepts.find(c => c.name === 'خطة تسويقية');   
-                if (productEntity && marketingConcept) {   
-                    extracted.relationships.push({   
-                        from: productEntity.name,   
-                        to: marketingConcept.name,   
-                        type: 'has_marketing_plan',   
-                        source: text   
-                    });   
-                }   
-                  
-                return extracted;   
-            }   
-   
-            extractKnowledge(text, messageUUID, sender) {   
-                const extractions = [];   
-                this.mockSemanticParsingAPI(text).then(extracted => {   
-                    extracted.entities.forEach(item => {   
-                        const entityKey = `${item.type}_${item.name.replace(/\s+/g, '_').toLowerCase()}`;   
-                        if (!this.state.contextMemory.entities[entityKey]) {   
-                            this.state.contextMemory.entities[entityKey] = {   
-                                uuid: generateUUID(),   
-                                key: entityKey,   
-                                name: item.name,   
-                                type: item.type,   
-                                firstMentioned: messageUUID,   
-                                references: []   
-                            };   
-                            extractions.push(`تم اكتشاف كيان: "${item.name}"`);   
-                        }   
-                        this.state.contextMemory.entities[entityKey].references.push({ messageUUID, text, sender });   
-                    });   
-   
-                    extracted.tasks.forEach(item => {   
-                        const taskUUID = generateUUID();   
-                        this.state.contextMemory.tasks[taskUUID] = {   
-                            uuid: taskUUID,   
-                            name: item.name,   
-                            status: item.status,   
-                            priority: item.priority,   
-                            created: messageUUID,   
-                            createdBy: sender,   
-                            relatedTo: [],   
-                            references: [{ messageUUID, text, sender }]   
-                        };   
-                        extractions.push(`تم إضافة مهمة: "${item.name}"`);   
-                    });   
-  
-                    extracted.concepts.forEach(item => {   
-                        const conceptKey = `concept_${item.name.replace(/\s+/g, '_').toLowerCase()}`;   
-                        if (!this.state.contextMemory.concepts[conceptKey]) {   
-                            this.state.contextMemory.concepts[conceptKey] = {   
-                                uuid: generateUUID(),   
-                                key: conceptKey,   
-                                name: item.name,   
-                                category: 'general',   
-                                firstMentioned: messageUUID,   
-                                references: []   
-                            };   
-                            extractions.push(`تم استخلاص مفهوم: "${item.name}"`);   
-                        }   
-                        this.state.contextMemory.concepts[conceptKey].references.push({ messageUUID, text, sender });   
-                    });   
-  
-                    extracted.relationships.forEach(item => {   
-                        this.state.contextMemory.relationships.push({   
-                            uuid: generateUUID(),   
-                            from: item.from,   
-                            to: item.to,   
-                            type: item.type,   
-                            sourceMessage: messageUUID   
-                        });   
-                        extractions.push(`تم استخلاص علاقة: ${item.from} -> ${item.to}`);   
-                    });   
-   
-                    if (extractions.length > 0) {   
-                        setTimeout(() => {   
-                            this.showNotification(`🧠 تم استخلاص ${extractions.length} عنصر جديد للذاكرة التعاونية (متقدم)!`, 'success');   
-                        }, 500);   
-                    }   
-                    this.saveState(); // حفظ الحالة بعد استخلاص المعرفة   
-                    this.updateMemoryStats();   
-                });   
-            }   
-  
-            updateMemoryStats() {   
-                this.state.memoryStats.totalEntities = Object.keys(this.state.contextMemory.entities).length;   
-                this.state.memoryStats.totalTasks = Object.keys(this.state.contextMemory.tasks).filter(key =>    
-                    this.state.contextMemory.tasks[key].status !== 'completed' &&    
-                    this.state.contextMemory.tasks[key].status !== 'failed'   
-                ).length;   
-                this.state.memoryStats.totalConcepts = Object.keys(this.state.contextMemory.concepts).length;   
-                this.state.memoryStats.activeTasks = Object.values(this.state.contextMemory.tasks).filter(task => task.status === 'pending' || task.status === 'in_progress').length;   
-   
-                this.updateCollaborationBar();   
-            }   
-  
-            updateCollaborationBar() {   
-                const bar = this.elements.collaborationBar;   
-                let summaryText = ``;   
-  
-                const { totalEntities, activeTasks, totalConcepts } = this.state.memoryStats;   
-   
-                if (totalEntities > 0) summaryText += ` (${totalEntities} كيان)`;   
-                if (totalConcepts > 0) summaryText += ` (${totalConcepts} مفهوم)`;   
-                if (activeTasks > 0) summaryText += ` (${activeTasks} مهمة نشطة)`;   
-   
-                this.elements.collaborationBarText.innerHTML = `<i class="fas fa-users"></i> مساحة عمل تعاونية نشطة. ${summaryText}`;   
-   
-                if (totalEntities > 0 || totalConcepts > 0 || activeTasks > 0) {   
-                    bar.classList.add('active');   
-                } else {   
-                    bar.classList.remove('active');   
-                }   
-            }   
-  
-  
-            // 🔥 NEW: دالة عرض الذاكرة (Memory Dashboard) - تم ملء الكود المفقود 
-            showMemoryDashboard() { 
-                const panel = this.elements.dashboardPanel; 
-                // مسح المحتوى القديم وإضافة زر الإغلاق لضمان وجوده 
-                panel.innerHTML = '<button class="dashboard-toggle-btn" onclick="aladan.toggleDashboard(false)" title="إغلاق"><i class="fas fa-times"></i></button>'; 
-                 
-                const memoryContent = document.createElement('div');  
-                memoryContent.className = 'memory-dashboard-content';  
-                memoryContent.style.padding = '0 40px 40px 40px';  
-                 
-                let html = '<h4 style="margin-bottom: 32px; font-size: 28px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">محرك الذاكرة التعاونية (AGNES) 🧠</h4>';  
-                  
-                // --- 1. إحصائيات علوية ---  
-                html += '<div class="memory-stats-bar">';  
-                html += `<div class="memory-stat" style="color: var(--neon-cyan);">كيانات: <strong>${this.state.memoryStats.totalEntities}</strong></div>`;  
-                html += `<div class="memory-stat" style="color: var(--neon-green);">مهام نشطة: <strong>${this.state.memoryStats.activeTasks}</strong></div>`;  
-                html += `<div class="memory-stat" style="color: var(--neon-purple);">مفاهيم: <strong>${this.state.memoryStats.totalConcepts}</strong></div>`;  
-                html += '</div><hr style="border-color: rgba(0, 255, 255, 0.1); margin: 20px 0;">';  
-  
-                // --- 2. عرض المهام (Tasks) ---  
-                html += '<h5 style="font-size: 20px; color: var(--neon-green); margin-bottom: 15px;">المهام النشطة <i class="fas fa-list-check"></i></h5>';  
-                const tasks = Object.values(this.state.contextMemory.tasks);  
-                if (tasks.length > 0) {  
-                    tasks.forEach(task => {  
-                        const statusColor = task.status === 'pending' ? 'var(--neon-orange)' : 'var(--neon-green)';  
-                        html += `  
-                            <div class="memory-item" style="border-right-color: ${statusColor};">  
-                                <div>  
-                                    ${task.name}  
-                                    <span class="memory-badge badge-task">${task.status}</span>  
-                                </div>  
-                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 5px;">  
-                                    الأولوية: ${task.priority}  
-                                    <button style="margin-right: 10px; background: none; border: 1px solid var(--neon-green); color: var(--neon-green); border-radius: 5px; cursor: pointer; padding: 2px 5px;" onclick="aladan.updateTaskStatus('${task.uuid}', 'completed')">إتمام</button>  
-                                </div>  
-                            </div>  
-                        `;  
-                    });  
-                } else {  
-                    html += '<p style="color: var(--text-secondary); opacity: 0.7;">لا توجد مهام نشطة حالياً.</p>';  
-                }  
-  
-                // --- 3. عرض الكيانات (Entities) ---  
-                html += '<h5 style="font-size: 20px; color: var(--neon-cyan); margin-top: 30px; margin-bottom: 15px;">الكيانات المستخلصة <i class="fas fa-cube"></i></h5>';  
-                const entities = Object.values(this.state.contextMemory.entities);  
-                if (entities.length > 0) {  
-                    entities.forEach(entity => {  
-                        html += `  
-                            <div class="memory-item" style="border-right-color: var(--neon-cyan);">  
-                                <div>  
-                                    ${entity.name}  
-                                    <span class="memory-badge badge-entity">${entity.type}</span>  
-                                </div>  
-                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 5px;">  
-                                    الذكر الأول: ${new Date(this.state.chatHistory.find(m => m.uuid === entity.firstMentioned)?.timestamp || 0).toLocaleDateString()}  
-                                </div>  
-                            </div>  
-                        `;  
-                    });  
-                } else {  
-                    html += '<p style="color: var(--text-secondary); opacity: 0.7;">لم يتم استخلاص كيانات بعد.</p>';  
-                }  
-  
-                panel.appendChild(memoryContent);  
-                memoryContent.innerHTML = html;  
-                  
-                // تأكد من فتح لوحة القيادة  
-                this.toggleDashboard(true);  
-                this.showNotification('تم فتح لوحة تحكم الذاكرة المتقدمة. 🧠', 'info');  
-            }  
-    
-            updateTaskStatus(taskUUID, newStatus) {    
-                if (this.state.contextMemory.tasks[taskUUID]) {    
-                    this.state.contextMemory.tasks[taskUUID].status = newStatus;    
-                    this.saveState();    
-                    this.updateMemoryStats();    
-                    this.showNotification(`تم تحديث حالة المهمة "${this.state.contextMemory.tasks[taskUUID].name}" إلى: ${newStatus}`, 'info');    
-                    // هذا سيؤدي إلى تحديث لوحة المعلومات إذا كانت مفتوحة   
-                    if (this.elements.dashboardPanel.classList.contains('active') && this.elements.dashboardPanel.querySelector('.memory-dashboard-content')) { 
-                        this.showMemoryDashboard(); 
-                    } 
-                }    
-            }    
-     
-            addMessage(text, sender, messageUUID) {    
-                // عرض الرسالة أولاً    
-                const messageDiv = this.createMessageStructure(sender, text);    
-                this.elements.chatContainer.appendChild(messageDiv);    
-                    
-                // استخلاص المعرفة التلقائي المتقدم (غير متزامن)    
-                this.extractKnowledge(text, messageUUID, sender);     
-                    
-                // 🏆 الإصلاح 3: إزالة الإضافة لـ this.state.chatHistory.push(enrichedMessage);
-                //  لأنه سيتم حفظها يدوياً داخل streamResponse لضمان حفظ الثنائي.
-                
-                this.scrollToBottom();    
-            }    
-                 
-            sendPredefinedMessage(text) {    
-                this.elements.messageInput.value = text;    
-                this.sendMessage();    
-            }    
-     
-            createMessageStructure(sender, originalText) {    
-                const messageDiv = document.createElement('div');    
-                messageDiv.className = `message ${sender}-message`;    
-                const uuid = generateUUID(); // توليد UUID هنا
-                messageDiv.dataset.messageUuid = uuid;    
-                    
-                const time = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: false });    
-    
-                // 🏆 الإصلاح 1.2: إضافة شريط الإجراءات الكامل لتمكين الذاكرة التعاونية
-                const actionsHtml = `
-                    <div class="message-actions">
-                        <button class="message-action-btn" onclick="aladan.copyMessage(event)" title="نسخ الرسالة">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                        <button class="message-action-btn" onclick="aladan.saveAsTask(event)" title="حفظ كمهمة">
-                            <i class="fas fa-list-check"></i>
-                        </button>
-                        <button class="message-action-btn" onclick="aladan.generateReport(event)" title="إنشاء تقرير">
-                            <i class="fas fa-file-pdf"></i>
-                        </button>
-                        <button class="message-action-btn" onclick="aladan.createPresentation(event)" title="عرض تقديمي">
-                            <i class="fas fa-desktop"></i>
-                        </button>
-                    </div>
-                `;
-
-                messageDiv.innerHTML = `    
-                    ${actionsHtml}
-                    <div class="message-bubble">    
-                        <div data-uuid="${uuid}">${this.parseMarkdown(originalText)}</div>    
-                        <div class="message-time">${time}</div>    
-                    </div>    
-                `;    
-                return messageDiv;    
-            }    
-    
-            parseMarkdown(text) {    
-                // تم التأكد من صحة هذه الدالة    
-                return text    
-                    .replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang = 'text', code) => {    
-                        const languageDisplay = lang === 'text' ? 'Code' : lang.toUpperCase();    
-                        const sanitizedCode = code.trim().replace(/"/g, '&quot;');    
-                        return `    
-                        <div class="code-block-wrapper">    
-                            <div class="code-toolbar">    
-                                <span class="code-language">${languageDisplay}</span>    
-                                <div class="code-actions">    
-                                    <button class="code-action-btn" onclick="aladan.copyCode(event)" data-code="${sanitizedCode}" title="نسخ الكود">    
-                                        <i class="fas fa-copy"></i>    
-                                    </button>    
-                                    <button class="code-action-btn" onclick="aladan.downloadCode(event)" data-code="${sanitizedCode}" data-lang="${lang}" title="تنزيل الملف">    
-                                        <i class="fas fa-download"></i>    
-                                    </button>    
-                                    <button class="code-action-btn run-code-btn" onclick="aladan.runCode(event)" data-code="${sanitizedCode}" data-lang="${lang}" title="تشغيل الكود">    
-                                        <i class="fas fa-play"></i>    
-                                    </button>    
-                                </div>    
-                            </div>    
-                            <pre><code class="language-${lang}">${code.trim()}</code></pre>    
-                        </div>    
-                        `;    
-                    })    
-                    .replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--neon-cyan);">$1</strong>')    
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>')    
-                    .replace(/^>\s?(.*)$/gm, '<blockquote style="border-right: 4px solid var(--neon-green); padding-right: 20px; color: var(--text-secondary); margin: 16px 0;">$1</blockquote>')    
-                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" style="max-width:100%; height:auto; border-radius:12px; margin-top:16px;">')    
-                    .replace(/\n/g, '<br>')    
-                    .replace(/^- (.*)$/gm, '<ul><li>$1</li></ul>')    
-                    .replace(/<\/ul>\n<ul>/g, '')    
-                    .replace(/<\/ol>\n<ol>/g, '');  
-                    // إصلاح مشكلة ظهور العناصر كـ ul/li إذا كانت موجودة (ليست جزءًا من Markdown القياسي) 
-            }    
-     
-            copyCode(event) {    
-                event.stopPropagation();    
-                const button = event.currentTarget;    
-                const code = button.dataset.code.replace(/&quot;/g, '"');    
-                navigator.clipboard.writeText(code).then(() => {    
-                    const originalIcon = button.innerHTML;    
-                    button.innerHTML = '<i class="fas fa-check"></i>';    
-                    button.classList.add('success');    
-                    this.showNotification('تم نسخ الكود بنجاح! 📋', 'success');    
-                    setTimeout(() => {    
-                        button.innerHTML = originalIcon;    
-                        button.classList.remove('success');    
-                    }, 2000);    
-                }).catch(() => {    
-                    this.showNotification('فشل في نسخ الكود!', 'error');    
-                });    
-            }    
-               
-            downloadCode(event) {    
-                event.stopPropagation();    
-                const button = event.currentTarget;    
-                const code = button.dataset.code.replace(/&quot;/g, '"');    
-                const lang = button.dataset.lang || 'txt';    
-     
-                let extension = '';    
-                if (lang === 'python') extension = '.py';    
-                else if (lang === 'javascript') extension = '.js';    
-                else if (lang === 'css') extension = '.css';    
-                else if (lang === 'html') extension = '.html';    
-                else extension = `.${lang}`;    
-     
-                const filename = `aladan_snippet${extension}`;    
-     
-                const blob = new Blob([code], { type: 'text/plain' });    
-                const url = URL.createObjectURL(blob);    
-     
-                const a = document.createElement('a');    
-                a.href = url;    
-                a.download = filename;    
-                document.body.appendChild(a);    
-                a.click();    
-     
-                document.body.removeChild(a);    
-                URL.revokeObjectURL(url);    
-     
-                this.showNotification(`جاري تنزيل ملف "${filename}"... 📥`, 'info');    
-            }    
-     
-            runCode(event) {    
-                event.stopPropagation();    
-                const button = event.currentTarget;    
-                const code = button.dataset.code.replace(/&quot;/g, '"');    
-                const lang = button.dataset.lang;    
-                this.showNotification(`▶️ جاري تشغيل كود ${lang.toUpperCase()} في بيئة آمنة...`, 'info');    
-                console.log(`Running ${lang} code:\n${code}`);    
-                setTimeout(() => {    
-                    this.addMessage(`**تم تنفيذ الكود بنجاح!**\n\`\`\`text\n(الناتج الافتراضي لتشغيل الكود)\n\`\`\``, 'ai', generateUUID());    
-                }, 1500);    
-            }    
-               
-            copyMessage(event) {    
-                 event.stopPropagation();    
-                 const button = event.currentTarget;    
-                 const messageBubble = button.closest('.message');    
-                 const textToCopy = messageBubble.querySelector('.message-bubble > div:first-child').innerText;    
-                     
-                 navigator.clipboard.writeText(textToCopy).then(() => {    
-                     const originalIcon = button.innerHTML;    
-                     button.innerHTML = '<i class="fas fa-check"></i>';    
-                     button.classList.add('success');    
-                     this.showNotification('تم نسخ الرسالة بنجاح! 📋', 'success');    
-                     setTimeout(() => {    
-                         button.innerHTML = originalIcon;    
-                         button.classList.remove('success');    
-                     }, 2000);    
-                 }).catch(() => {    
-                     this.showNotification('فشل في نسخ الرسالة!', 'error');    
-                 });    
-             }    
-               
-             // 🔥 NEW: دالة حفظ الرسالة كمهمة (مضافة) 
-            saveAsTask(event) { 
-                const messageBubble = event.currentTarget.closest('.message'); 
-                const text = messageBubble.querySelector('.message-bubble > div:first-child').innerText.trim(); 
-                const messageUUID = messageBubble.dataset.messageUuid; 
-                const taskUUID = generateUUID(); 
-                 
-                const taskName = text.substring(0, 50) + (text.length > 50 ? '...' : ''); // اسم المهمة هو أول 50 حرف 
-                 
-                this.state.contextMemory.tasks[taskUUID] = { 
-                    uuid: taskUUID, 
-                    name: taskName, 
-                    status: 'pending', 
-                    priority: 'high', 
-                    created: messageUUID, 
-                    createdBy: 'ai', // المهمة مستخلصة من رد الـ AI 
-                    relatedTo: [], 
-                    references: [{ messageUUID, text, sender: 'ai' }] 
+            .input-container {  
+                padding: 16px 20px; 
+                margin: 0 16px; 
+                border-radius: 20px; 
+                margin-top: 16px; 
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.1); 
+            } 
+            .send-btn { width: 44px; height: 44px; } 
+        } 
+ 
+        /* Bounce Animation for Logo */ 
+        @keyframes bounce { 
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
+            40% { transform: translateY(-10px); } 
+            60% { transform: translateY(-5px); } 
+        } 
+ 
+        /* 🆕 CSS for Image Preview */ 
+        .image-preview-container { 
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-start; /* For RTL */ 
+            background: var(--secondary-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            padding: 8px; 
+            margin-top: 10px; /* Space above input */ 
+            margin-inline-end: auto; /* Push to right in RTL */ 
+            max-width: 900px; 
+            width: 100%; 
+            box-shadow: var(--shadow); 
+            flex-shrink: 0; /* Prevent shrinking */ 
+        } 
+        .image-preview-container img { 
+            max-height: 100px;  
+            max-width: 100%;  
+            border-radius: 8px;  
+            margin: 8px;  
+            border: 1px solid var(--border-color); 
+            object-fit: contain; /* Ensure image fits without cropping */ 
+        } 
+        .image-preview-container .header-icon { /* Reusing header-icon style for consistency */ 
+            position: absolute;  
+            top: 5px;  
+            left: 5px; /* For RTL */ 
+            background: rgba(239, 68, 68, 0.8);  
+            color: white;  
+            border-radius: 50%;  
+            width: 28px;  
+            height: 28px;  
+            font-size: 14px;  
+            padding: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            z-index: 10; 
+        } 
+        .image-preview-container .header-icon:hover { 
+            background: rgba(239, 68, 68, 1); 
+            transform: scale(1.1); 
+        } 
+    </style> 
+</head> 
+<body> 
+    <div class="header"> 
+        <div class="app-name"> 
+            <i class="fas fa-bolt"></i> 
+            Whizz.ink 
+        </div> 
+        <div class="header-icons"> 
+            <div class="header-icon theme-toggle" id="themeToggle" title="تبديل الوضع الليلي/النهاري"> 
+                <i class="fas fa-moon"></i> 
+            </div> 
+            <div class="header-icon" id="clearChat" title="مسح المحادثة"> 
+                <i class="fas fa-trash"></i> 
+            </div> 
+        </div> 
+    </div> 
+ 
+    <div class="chat-container" id="chatContainer"> 
+        <div class="welcome-container" id="welcomeMessage"> 
+            <div class="welcome-logo">⚡</div> 
+            <div class="welcome-title">مرحباً بك في Whizz.ink المحدث</div> 
+            <div class="welcome-subtitle"> 
+                واجهة دردشة متقدمة مع **Dark Mode**، **محاذاة RTL مثالية**، و**ربط مباشر بـ Gemini API**.<br> 
+                الآن مع **دعم إرسال الصور!** 🖼️ 
+                <small style="opacity: 0.8;">مدعوم من Sapiens AI | النسخة المحدثة 2025 ✨</small> 
+            </div> 
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;"> 
+                <button class="welcome-btn" onclick="whizz.sendPredefinedMessage('اشرح لي مبدأ عمل الـ Mocking في الـ Frontend مع مثال كود JavaScript.')"> 
+                    كيف يعمل الـ Mocking؟ 
+                </button> 
+                <button class="welcome-btn" onclick="whizz.sendPredefinedMessage('اعطني مثال كامل لـ Todo App بـ React + Tailwind CSS.')" style="background: #10B981;"> 
+                    مثال React App 
+                </button> 
+            </div> 
+        </div> 
+    </div> 
+ 
+    <div class="image-preview-container" id="imagePreviewContainer" style="display: none;"> 
+        <img id="imagePreview" src="" alt="صورة مرفقة"> 
+        <button class="header-icon" id="removeImageBtn" title="إزالة الصورة"> 
+            <i class="fas fa-times"></i> 
+        </button> 
+    </div> 
+ 
+    <div class="input-container"> 
+        <button class="header-icon" id="uploadImageBtn" title="إرفاق صورة"> 
+            <i class="fas fa-image"></i> 
+        </button> 
+        <input type="file" id="imageInput" accept="image/*" style="display: none;"> 
+ 
+        <textarea  
+            class="message-input"  
+            id="messageInput"  
+            placeholder="اكتب رسالتك هنا... (اضغط Enter للإرسال، Shift+Enter لسطر جديد) 🚀" 
+            rows="1"  
+            maxlength="5000" 
+        ></textarea> 
+        <button class="send-btn" id="sendBtn" title="إرسال (Enter)" disabled> 
+            <i class="fas fa-paper-plane" id="sendIcon"></i>  
+            <i class="fas fa-stop" id="stopIcon" style="display: none;"></i> 
+        </button> 
+    </div> 
+ 
+    <div class="notification" id="notification"></div> 
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script> 
+    <script> 
+        // ========================================================================== 
+        // WHIZZ.INK - النسخة المحدثة مع Dark Mode وربط مباشر بـ Gemini API ودعم الصور 
+        // Updated: 2025-12-16 | Developer: aladan (Whizz.ink) 
+        // ⚠️ تم تنظيف الأخطاء الحرجة (settingsBtn وتكرار الدوال) 
+        // 🛠️ تم إضافة نص افتراضي للصور المرسلة بدون نص
+        // 🛡️ تم تأمين المفتاح عبر استخدام Cloudflare Worker كـ Proxy
+        // ========================================================================== 
+ 
+        // 🚨🚨🚨 ملاحظة هامة: تم حذف GEMINI_API_KEY نهائياً من هذا الملف!
+        // 🚀 يجب أن تقوم بتحديث هذا الرابط إلى رابط Cloudflare Worker الخاص بك 
+        const GEMINI_API_URL = "https://gemini-proxy-adil.adillaghrifi5.workers.dev"; // ⬅️ رابط Proxy الخاص بك
+         
+        const MAX_HISTORY_MESSAGES = 10;  
+ 
+        function generateUUID() { 
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { 
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8); 
+                return v.toString(16); 
+            }); 
+        } 
+ 
+        class WhizzAI { 
+            constructor() { 
+                this.initElements(); 
+                this.state = { 
+                    isTyping: false, 
+                    chatHistory: [],  
+                    theme: localStorage.getItem('whizz-theme') || 'light', 
+                    isCancelled: false, 
+                    currentImageBase64: null  
                 }; 
-                 
-                this.saveState(); 
-                this.updateMemoryStats(); 
-                this.showNotification(`تم حفظ الرسالة كمهمة جديدة: "${taskName}"`, 'success'); 
+                this.loadState(); 
+                this.initTheme(); 
+                this.initEventListeners(); 
+                this.renderInitialChatHistory(); // 🧹 الدالة غير مكررة الآن
             } 
-             
-            generateReport(event) { 
-                this.showNotification('جاري إنشاء تقرير مفصل... 📊', 'info'); 
+ 
+            initElements() { 
+                this.elements = { 
+                    chatContainer: document.getElementById('chatContainer'), 
+                    messageInput: document.getElementById('messageInput'), 
+                    sendBtn: document.getElementById('sendBtn'), 
+                    welcomeMessage: document.getElementById('welcomeMessage'), 
+                    notification: document.getElementById('notification'), 
+                    clearChat: document.getElementById('clearChat'), 
+                    // ❌ تم حذف settingsBtn: document.getElementById('settingsBtn'), 
+                    themeToggle: document.getElementById('themeToggle'), 
+                    stopIcon: document.getElementById('stopIcon'), 
+                    sendIcon: document.getElementById('sendIcon'), 
+                    uploadImageBtn: document.getElementById('uploadImageBtn'),  
+                    imageInput: document.getElementById('imageInput'),  
+                    imagePreviewContainer: document.getElementById('imagePreviewContainer'),  
+                    imagePreview: document.getElementById('imagePreview'),  
+                    removeImageBtn: document.getElementById('removeImageBtn'), 
+                }; 
             } 
-             
-            createPresentation(event) { 
-                this.showNotification('جاري تجهيز عرض تقديمي احترافي... 🖼️', 'info'); 
+ 
+            initTheme() { 
+                document.documentElement.setAttribute('data-theme', this.state.theme); 
             } 
-   
-            showToolStatus(toolName) {   
-                this.elements.statusText.innerHTML = toolName;   
-                this.elements.toolStatusIndicator.classList.add('active');   
-                this.hideTypingIndicator();   
-            }   
-    
-            hideToolStatus() {   
-                this.elements.toolStatusIndicator.classList.remove('active');   
-            }   
-   
-            saveState() {   
-                const dataToSave = {   
-                    chatHistory: this.state.chatHistory,   
-                    contextMemory: this.state.contextMemory,   
-                    memoryStats: this.state.memoryStats,   
-                    currentThemeIndex: this.state.currentThemeIndex   
-                };   
-                localStorage.setItem('agnesUltra4State', JSON.stringify(dataToSave));   
-            }   
-    
-            loadState() {   
-                const savedState = localStorage.getItem('agnesUltra4State');   
-                if (savedState) {   
-                    try {   
-                        const parsedState = JSON.parse(savedState);   
-                        this.state.chatHistory = parsedState.chatHistory || [];   
-                        this.state.contextMemory = parsedState.contextMemory || { entities: {}, concepts: {}, tasks: {}, decisions: {}, relationships: [] };   
-                        this.state.memoryStats = parsedState.memoryStats || { totalEntities: 0, totalTasks: 0, totalConcepts: 0, activeTasks: 0 };   
-                        this.state.currentThemeIndex = parsedState.currentThemeIndex !== undefined ? parsedState.currentThemeIndex : 0;   
-                    } catch (e) {   
-                        console.error("Error loading state:", e);   
-                        this.state.chatHistory = [];   
-                        this.state.contextMemory = { entities: {}, concepts: {}, tasks: {}, decisions: {}, relationships: [] };   
-                        this.state.memoryStats = { totalEntities: 0, totalTasks: 0, totalConcepts: 0, activeTasks: 0 };   
-                    }   
-                }   
-                this.updateMemoryStats();   
-                // ✅ تطبيق الثيم المحفوظ عند التحميل   
-                this.applyTheme(this.state.themes[this.state.currentThemeIndex]);   
-            }   
-    
-            renderInitialChatHistory() {   
-                if (this.state.chatHistory.length > 0) {   
-                    this.elements.welcomeMessage.style.display = 'none';   
-                    this.state.chatHistory.forEach(msg => {   
-                        const messageDiv = this.createMessageStructure(msg.role, msg.parts[0].text);   
-                        this.elements.chatContainer.appendChild(messageDiv);   
-                        const codeBlocks = messageDiv.querySelectorAll('pre code');   
-                        codeBlocks.forEach(block => hljs.highlightElement(block));   
-                    });   
-                    this.elements.collaborationBar.classList.add('active');   
-                    this.scrollToBottom();   
-                }   
-            }   
-    
-            clearConversation() {   
-                if (confirm('هل أنت متأكد من مسح جميع الرسائل؟ هذا الإجراء لا يمكن التراجع عنه.')) {   
-                    this.elements.chatContainer.innerHTML = '';   
-                    this.elements.chatContainer.appendChild(this.elements.welcomeMessage);   
-                    this.elements.welcomeMessage.style.display = 'block';   
-                    this.state.chatHistory = [];   
-                    this.state.contextMemory = { entities: {}, concepts: {}, tasks: {}, decisions: {}, relationships: [] };   
-                    this.state.memoryStats = { totalEntities: 0, totalTasks: 0, totalConcepts: 0, activeTasks: 0 };   
-                    localStorage.removeItem('agnesUltra4State');   
-                    this.elements.collaborationBar.classList.remove('active');   
-                    this.showNotification('تم مسح المحادثة والذاكرة بنجاح!', 'success');   
-                    this.closeAllPanels();   
-                    this.updateCollaborationBar();   
-                    this.elements.sendBtn.disabled = true; // إعادة تعطيل زر الإرسال   
-                    this.elements.messageInput.value = ''; // مسح الإدخال   
-                }   
-            }   
-    
-            scrollToBottom() {   
-                this.elements.chatContainer.scrollTo({   
-                    top: this.elements.chatContainer.scrollHeight,   
-                    behavior: 'smooth'   
-                });   
-            }   
-    
-            delay(ms) {   
-                return new Promise(resolve => setTimeout(resolve, ms));   
-            }   
-    
-            showNotification(text, type = 'info') {   
-                this.elements.notification.textContent = text;   
-                this.elements.notification.className = `notification ${type} show`;   
-                setTimeout(() => {   
-                    this.elements.notification.classList.remove('show');   
-                }, 3000);   
-            }   
-  
-            toggleSidebar(open) {   
-                this.elements.sidebar.classList.toggle('open', open);   
-                this.elements.overlay.classList.toggle('active', open);   
-            }   
-    
-            toggleDashboard(openState) {   
-                const shouldOpen = typeof openState === 'boolean' ? openState : !this.elements.dashboardPanel.classList.contains('active');   
-                this.elements.dashboardPanel.classList.toggle('active', shouldOpen);   
-                this.elements.overlay.classList.toggle('active', shouldOpen);   
-            }   
-    
-            closeAllPanels() {   
-                this.elements.sidebar.classList.remove('open');   
-                this.elements.userPopover.classList.remove('active');   
-                this.elements.dashboardPanel.classList.remove('active');   
-                this.elements.inputToolsPopover.classList.remove('active');   
-                this.elements.overlay.classList.remove('active');   
-            }   
-    
-            handleOutsideClick(event) {   
-                const isPopoverOpen = this.elements.inputToolsPopover.classList.contains('active');   
-                const isUserPopoverOpen = this.elements.userPopover.classList.contains('active');   
-                const isSidebarOpen = this.elements.sidebar.classList.contains('open');   
-                const isDashboardOpen = this.elements.dashboardPanel.classList.contains('active');   
-   
-                if (isPopoverOpen && !this.elements.inputToolsPopover.contains(event.target) && !this.elements.attachBtn.contains(event.target)) {   
-                    this.elements.inputToolsPopover.classList.remove('active');   
-                }   
-                if (isUserPopoverOpen && !this.elements.userPopover.contains(event.target) && !this.elements.userBtn.contains(event.target)) {   
-                    this.elements.userPopover.classList.remove('active');   
-                }   
-                if (isSidebarOpen && !this.elements.sidebar.contains(event.target) && !this.elements.menuBtn.contains(event.target)) {   
-                    this.toggleSidebar(false);   
-                }   
-                // ✅ إصلاح مشكلة إغلاق الداشبورد عند الضغط خارجياً   
-                if (isDashboardOpen && !this.elements.dashboardPanel.contains(event.target) && !this.elements.dashboardToggleBtn.contains(event.target) && !this.elements.memoryBtn.contains(event.target)) {   
-                    this.toggleDashboard(false);   
-                }   
-            }   
-    
-            toggleVoiceRecording() {   
-                this.state.isRecording = !this.state.isRecording;   
-                this.elements.micBtn.classList.toggle('recording', this.state.isRecording);   
-   
-                if (this.state.isRecording) {   
-                    this.showNotification('جاري الاستماع...', 'info');   
-                    setTimeout(() => {   
-                        this.state.isRecording = false;   
-                        this.elements.micBtn.classList.remove('recording');   
-                        this.elements.messageInput.value += ' (مدخل صوتي)';   
-                        this.showNotification('تم تحويل الصوت إلى نص بنجاح! 🎤', 'success');   
-                        this.elements.messageInput.focus();   
-                        this.elements.sendBtn.disabled = false; // تفعيل الإرسال بعد إضافة نص   
-                    }, 2500);   
-                }   
-            }   
-    
-            handleToolAction(type) {   
-                const messages = {   
-                    image: 'جاهز لتحليل الصورة! (قريباً مع Vision API) 📸',   
-                    file: 'رفع المستندات جاهز! (قريباً) 📄',   
-                    create_table: 'تم اختيار أداة إنشاء الجدول. اكتب "إنشاء جدول" لبدء الاستخدام. 📊',   
-                    draw: 'فتح لوحة الرسم! (قريباً) ✏️'   
-                };   
-                this.showNotification(messages[type] || 'تم اختيار الأداة', 'info');   
-                this.elements.inputToolsPopover.classList.remove('active');   
-            }   
-    
-            loadPastConversation() {   
-                if (this.state.chatHistory.length > 0 &&   
-                    this.state.chatHistory[0]?.parts[0]?.text.includes('محادثة سابقة')) {   
-                    this.showNotification('تم تحميل المحادثة السابقة مسبقاً', 'info');   
-                    return;   
-                }   
-    
-                this.elements.chatContainer.innerHTML = '';   
-                this.elements.welcomeMessage.style.display = 'none';   
-    
-                const pastChat = [   
-                    { role: "user", parts: [{ text: "محادثة سابقة تجريبية" }] },   
-                    { role: "model", parts: [{ text: "مرحباً بعودتك! ماذا نناقش اليوم حول مشاريعك؟" }] },   
-                    { role: "user", parts: [{ text: "أحتاج تخطيط استراتيجية الربع الرابع وأفكار حملات تسويقية" }] },   
-                    { role: "model", parts: [{ text: "ممتاز! لاستراتيجية الربع الرابع، نحدد: **تحليل السوق**، **وضع الأهداف**، **تخصيص الموارد**. لحملات التسويق، أي منتج/خدمة تركز عليه؟" }] }   
-                ];   
-   
-                this.state.chatHistory = []; // مسح السجل الحالي قبل الإضافة   
-                pastChat.forEach((msg) => {   
-                    this.addMessage(msg.parts[0].text, msg.role, generateUUID());   
-                    // يجب أن نملأ السجل هنا يدوياً لأننا ألغينا الحفظ التلقائي في addMessage
-                    this.state.chatHistory.push({ 
-                         role: msg.role === 'model' ? 'ai' : msg.role,
-                         parts: msg.parts,
-                         uuid: generateUUID(),
-                         timestamp: Date.now(),
-                         knowledgeExtracted: true 
-                    });
-                });   
-   
-                this.elements.collaborationBar.classList.add('active');   
-                this.showNotification('تم تحميل المحادثة السابقة بنجاح! ✅', 'success');   
-                this.closeAllPanels();   
-            }  
+ 
+            toggleTheme() { 
+                this.state.theme = this.state.theme === 'light' ? 'dark' : 'light'; 
+                document.documentElement.setAttribute('data-theme', this.state.theme); 
+                localStorage.setItem('whizz-theme', this.state.theme); 
+                this.showNotification( 
+                    this.state.theme === 'dark' ?  
+                    'تم تفعيل الوضع الليلي 🌙' :  
+                    'تم تفعيل الوضع النهاري ☀️',  
+                    'success' 
+                ); 
+            } 
+ 
+            initEventListeners() { 
                 
-            showTypingIndicator() {  
-                if (this.state.isTyping || this.elements.toolStatusIndicator.classList.contains('active')) return;  
-                this.state.isTyping = true;  
-                const typingIndicator = document.createElement('div');  
-                typingIndicator.className = 'typing-indicator';  
-                typingIndicator.innerHTML = `  
-                    <div class="typing-dots">  
-                        <div class="typing-dot"></div>  
-                        <div class="typing-dot"></div>  
-                        <div class="typing-dot"></div>  
-                    </div>  
-                    <div>Aladan AI يكتب...</div>  
-                `;  
-                this.elements.chatContainer.appendChild(typingIndicator);  
+                // Auto-resize textarea 
+                this.elements.messageInput.addEventListener('input', (e) => { 
+                    e.target.style.height = 'auto'; 
+                    e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'; 
+                    this.elements.sendBtn.disabled = (e.target.value.trim().length === 0 && !this.state.currentImageBase64);  
+                }); 
+ 
+                // Theme toggle 
+                this.elements.themeToggle.addEventListener('click', () => this.toggleTheme()); 
+ 
+                // Clear chat 
+                this.elements.clearChat.addEventListener('click', () => this.clearConversation()); 
+ 
+                // Initial state 
+                this.elements.sendBtn.disabled = true; 
+ 
+                // Send/Stop button logic
+                this.elements.sendBtn.addEventListener('click', () => { 
+                    if (this.state.isTyping) { 
+                        this.cancelGeneration(); 
+                    } else { 
+                        this.sendMessage(); 
+                    } 
+                }); 
+ 
+                this.elements.messageInput.addEventListener('keypress', (e) => { 
+                    if (e.key === 'Enter' && !e.shiftKey) { 
+                        e.preventDefault(); 
+                        if (this.state.isTyping) { 
+                             this.cancelGeneration(); 
+                        } else { 
+                            this.sendMessage(); 
+                        } 
+                    } 
+                }); 
+ 
+                // Image upload handlers 
+                this.elements.uploadImageBtn.addEventListener('click', () => { 
+                    this.elements.imageInput.click(); 
+                }); 
+ 
+                this.elements.imageInput.addEventListener('change', (e) => this.handleImageUpload(e.target.files[0])); 
+                this.elements.removeImageBtn.addEventListener('click', () => this.removeImage()); 
+            } 
+ 
+            handleImageUpload(file) { 
+                if (!file) return; 
+ 
+                if (!file.type.startsWith('image/')) { 
+                    this.showNotification('الرجاء اختيار ملف صورة صالح.', 'error'); 
+                    return; 
+                } 
+ 
+                const reader = new FileReader(); 
+                reader.onloadend = () => { 
+                    this.state.currentImageBase64 = reader.result.split(',')[1]; 
+                    this.state.currentImageMimeType = file.type; 
+                    
+                    this.elements.imagePreview.src = reader.result; 
+                    this.elements.imagePreviewContainer.style.display = 'flex'; 
+                    this.elements.messageInput.focus(); 
+                    this.elements.sendBtn.disabled = false; 
+                }; 
+                reader.readAsDataURL(file); 
+                this.showNotification(`تم إرفاق الصورة: ${file.name}`, 'info'); 
+            } 
+ 
+            removeImage() { 
+                this.state.currentImageBase64 = null; 
+                this.state.currentImageMimeType = null; 
+                this.elements.imageInput.value = '';  
+                this.elements.imagePreview.src = ''; 
+                this.elements.imagePreviewContainer.style.display = 'none'; 
+                
+                this.elements.sendBtn.disabled = this.elements.messageInput.value.trim().length === 0; 
+                this.showNotification('تم إزالة الصورة.', 'info'); 
+            } 
+ 
+ 
+            toggleSendButton(isTyping) { 
+                this.state.isTyping = isTyping; 
+                if (isTyping) { 
+                    this.elements.sendIcon.style.display = 'none'; 
+                    this.elements.stopIcon.style.display = 'inline'; 
+                    this.elements.sendBtn.classList.add('loading'); 
+                } else { 
+                    this.elements.sendIcon.style.display = 'inline'; 
+                    this.elements.stopIcon.style.display = 'none'; 
+                    this.elements.sendBtn.classList.remove('loading'); 
+                } 
+            } 
+ 
+            cancelGeneration() { 
+                if (this.state.isTyping) { 
+                    this.state.isCancelled = true; 
+                    this.showNotification('تم إيقاف الرد بنجاح.', 'info'); 
+                    this.hideTypingIndicator(); 
+                    this.toggleSendButton(false); 
+                    this.elements.sendBtn.disabled = false; 
+                    this.elements.messageInput.focus(); 
+                } 
+            } 
+ 
+            async sendMessage() { 
+                const text = this.elements.messageInput.value.trim(); 
+                if (!text && !this.state.currentImageBase64 || this.elements.sendBtn.disabled) return; 
+ 
+                const messageUUID = generateUUID(); 
+                 
+                // 🛠️ بناء المحتوى الحالي (النص و/أو الصورة) 
+                const currentParts = []; 
+                if (this.state.currentImageBase64) { 
+                    currentParts.push({ 
+                        inlineData: { 
+                            data: this.state.currentImageBase64, 
+                            mimeType: this.state.currentImageMimeType || 'image/jpeg' 
+                        } 
+                    }); 
+                } 
+                
+                // 🛠️ إضافة النص (إذا كان موجوداً)، أو إضافة نص افتراضي للصورة إذا كان النص فارغاً
+                if (text) { 
+                    currentParts.push({ text: text }); 
+                } else if (this.state.currentImageBase64) {
+                    currentParts.push({ text: "ماذا يوجد في هذه الصورة؟" }); 
+                }
+ 
+                // 1. أضف رسالة المستخدم إلى السجل الآن 
+                const userMessage = {  
+                    role: 'user',  
+                    parts: currentParts,  
+                    uuid: messageUUID,  
+                    timestamp: Date.now()  
+                };  
+                this.state.chatHistory.push(userMessage);  
+ 
+                // 2. عرض الرسالة في DOM 
+                this.addMessageToDOM(currentParts, 'user', messageUUID);  
+                this.removeImage();  
+ 
+                this.elements.welcomeMessage.style.display = 'none'; 
+                this.elements.messageInput.value = ''; 
+                this.elements.messageInput.style.height = 'auto'; 
+                this.elements.sendBtn.disabled = false;  
+                this.toggleSendButton(true); 
+ 
+ 
+                this.showTypingIndicator(); 
+ 
+                try {  
+                    // 3. تجميع سجل المحادثات (مع تحديد الحد الأقصى وتنظيف الصور القديمة) 
+                    const recentHistory = this.state.chatHistory.slice(-MAX_HISTORY_MESSAGES); 
+ 
+                    const contentsToSend = recentHistory.map((msg, index) => { 
+                        const isLastMessage = index === recentHistory.length - 1; 
+ 
+                        let cleanParts = msg.parts; 
+ 
+                        // لا ترسل الصور القديمة! 
+                        if (!isLastMessage) { 
+                            cleanParts = msg.parts.filter(part => part.text); 
+                             
+                            if (cleanParts.length === 0) { 
+                                cleanParts.push({ text: "" }); 
+                            } 
+                        } 
+ 
+                        return { 
+                            role: msg.role === 'user' ? 'user' : 'model',  
+                            parts: cleanParts  
+                        }; 
+                    }); 
+                     
+                    const aiMessageUUID = generateUUID(); 
+                    const messageDiv = this.createMessageStructure('ai', '...');  
+                    messageDiv.dataset.messageUuid = aiMessageUUID; 
+                    this.elements.chatContainer.appendChild(messageDiv); 
+                    this.scrollToBottom(); 
+ 
+                    const bubbleContent = messageDiv.querySelector('.message-bubble > div:first-child'); 
+                      
+                    // 🛡️ استخدام رابط الـ PROXY الآن
+                    const response = await fetch(GEMINI_API_URL, {  
+                        method: 'POST', 
+                        headers: {  
+                            'Content-Type': 'application/json'  
+                        },  
+                        body: JSON.stringify({  
+                            contents: contentsToSend,  
+                            generationConfig: {  
+                                temperature: 0.7,  
+                                topK: 40,  
+                                topP: 0.95,  
+                                maxOutputTokens: 2048  
+                            }  
+                        })  
+                    }); 
+ 
+                    const data = await response.json(); 
+                      
+                    if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {  
+                        const fullResponse = data.candidates[0].content.parts[0].text;  
+                         
+                        // 4. أضف الرد إلى السجل 
+                        const enrichedMessage = {   
+                            role: 'ai',   
+                            parts: [{ text: fullResponse }],   
+                            uuid: aiMessageUUID,   
+                            timestamp: Date.now()   
+                        };   
+                        this.state.chatHistory.push(enrichedMessage);   
+                        this.saveState();   
+ 
+                        // 5. عرض الكتابة التدريجية 
+                        const words = fullResponse.split(' ');  
+                        let currentText = '';  
+                        for (let i = 0; i < words.length; i++) {  
+                            if (this.state.isCancelled) {  
+                                this.state.isCancelled = false; 
+                                break;  
+                            } 
+                            currentText += (i > 0 ? ' ' : '') + words[i];  
+                            bubbleContent.innerHTML = this.parseMarkdown(currentText);  
+                            this.highlightCodeBlocks(messageDiv);  
+                            this.scrollToBottom();  
+                            await this.delay(15 + Math.random() * 10);  
+                        } 
+ 
+                    } else {  
+                        // معالجة أخطاء الـ Proxy أو الـ API
+                        const errorMessage = data.error?.message || 'حدث خطأ غير معروف. تأكد من أن الـ Worker يعمل بشكل صحيح أو أن مفتاح API سليم.';  
+                        bubbleContent.innerHTML = this.parseMarkdown(`❌ خطأ في الاتصال: ${errorMessage}`);  
+                        this.showNotification(`خطأ في API: ${errorMessage}`, 'error'); 
+ 
+                        this.state.chatHistory.pop(); 
+                        this.saveState(); 
+                    }  
+                      
+                } catch (error) {  
+                    console.error("Connection Error:", error);  
+                    const lastMessage = this.elements.chatContainer.lastElementChild.querySelector('.message-bubble > div:first-child');  
+                    lastMessage.innerHTML = this.parseMarkdown('عذراً، فشل الاتصال بخدمة الـ Proxy أو Gemini. تحقق من رابط `GEMINI_API_URL`.');  
+                    this.showNotification('❌ فشل الاتصال. تحقق من رابط الـ Proxy.', 'error'); 
+                     
+                    this.state.chatHistory.pop(); 
+                    this.saveState(); 
+ 
+                } finally {  
+                    this.toggleSendButton(false);  
+                    this.hideTypingIndicator();  
+                    this.elements.sendBtn.disabled = this.elements.messageInput.value.trim().length === 0; 
+                    this.elements.messageInput.focus();  
+                } 
+            } 
+ 
+            addMessageToDOM(parts, sender, messageUUID) {  
+                let htmlContent = '';  
+                let text = ''; 
+                 
+                parts.forEach(part => { 
+                    if (part.text) { 
+                        text += part.text; 
+                    } else if (part.inlineData) { 
+                        const imageUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`; 
+                        htmlContent += `<img src="${imageUrl}" alt="صورة مرفقة" style="max-width:100%; height:auto; border-radius:12px; margin-bottom: 12px;">`; 
+                    } 
+                }); 
+ 
+                htmlContent += this.parseMarkdown(text); 
+ 
+                const messageDiv = this.createMessageStructure(sender, htmlContent);  
+                messageDiv.dataset.messageUuid = messageUUID;  
+                this.elements.chatContainer.appendChild(messageDiv);  
                 this.scrollToBottom();  
-                this.typingIndicator = typingIndicator;  
-            }  
-   
-            hideTypingIndicator() {  
-                if (this.typingIndicator) {  
-                    this.typingIndicator.remove();  
-                    this.typingIndicator = null;  
-                    this.state.isTyping = false;  
+            } 
+ 
+            parseMarkdown(text) { 
+                return text 
+                    // Code blocks 
+                    .replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang = 'text', code) => { 
+                        const languageDisplay = lang === 'text' ? 'كود' : lang.toUpperCase(); 
+                        const sanitizedCode = code.trim().replace(/"/g, '&quot;'); 
+                        return ` 
+                            <div class="code-block-wrapper"> 
+                                <div class="code-toolbar"> 
+                                    <span class="code-language">${languageDisplay}</span> 
+                                    <div class="code-actions"> 
+                                        <button class="code-action-btn" onclick="whizz.copyCode(event)" data-code="${sanitizedCode}" title="نسخ الكود"> 
+                                            <i class="fas fa-copy"></i> 
+                                        </button> 
+                                    </div> 
+                                </div> 
+                                <pre><code class="language-${lang}">${code.trim()}</code></pre> 
+                            </div>`; 
+                    }) 
+                    // Bold & Italic 
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>') 
+                    // Blockquotes 
+                    .replace(/^>\s?(.*)$/gm, '<blockquote style="background: rgba(79,70,229,0.1); border-inline-start: 4px solid var(--brand-color); padding: 12px 16px; margin: 12px 0; border-radius: 8px;">$1</blockquote>') 
+                    // Headers 
+                    .replace(/^### (.*)$/gm, '<h4 style="color: var(--brand-color); font-size: 18px; margin: 16px 0 8px 0; font-weight: 700;">$1</h4>') 
+                    .replace(/^## (.*)$/gm, '<h3 style="color: var(--brand-color); font-size: 20px; margin: 20px 0 12px 0; font-weight: 700; border-bottom: 2px solid rgba(79,70,229,0.2); padding-bottom: 8px;">$1</h3>') 
+                    // Lists 
+                    .replace(/^- (.*)$/gm, '<div style="margin: 8px 0; display: flex; align-items: center;"><i class="fas fa-check-circle" style="color: #10B981; margin-left: 8px;"></i><span>$1</span></div>') 
+                    // Line breaks 
+                    .replace(/\n/g, '<br>'); 
+            } 
+ 
+            highlightCodeBlocks(container) {
+                container.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            copyCode(event) { 
+                event.stopPropagation(); 
+                const button = event.currentTarget; 
+                const code = button.dataset.code.replace(/&quot;/g, '"'); 
+                navigator.clipboard.writeText(code).then(() => { 
+                    const original = button.innerHTML; 
+                    button.innerHTML = '<i class="fas fa-check"></i>'; 
+                    button.style.background = 'rgba(16,185,129,0.2)'; 
+                    this.showNotification('✅ تم نسخ الكود بنجاح!', 'success'); 
+                    setTimeout(() => { 
+                        button.innerHTML = original; 
+                        button.style.background = ''; 
+                    }, 2000); 
+                }).catch(() => { 
+                    this.showNotification('❌ فشل في النسخ!', 'error'); 
+                }); 
+            } 
+ 
+            copyMessage(event) { 
+                event.stopPropagation(); 
+                const messageDiv = event.currentTarget.closest('.message'); 
+                const text = messageDiv.querySelector('.message-bubble').textContent; 
+                navigator.clipboard.writeText(text).then(() => { 
+                    this.showNotification('📋 تم نسخ الرسالة!', 'success'); 
+                }); 
+            } 
+ 
+            sendPredefinedMessage(text) { 
+                this.elements.messageInput.value = text; 
+                this.elements.sendBtn.disabled = false;  
+                this.sendMessage(); 
+            } 
+ 
+            createMessageStructure(sender, content) { 
+                const messageDiv = document.createElement('div'); 
+                messageDiv.className = `message ${sender}-message`; 
+                messageDiv.dataset.messageUuid = generateUUID(); 
+ 
+                const time = new Date().toLocaleTimeString('ar-EG', {  
+                    hour: '2-digit',  
+                    minute: '2-digit',  
+                    hour12: false  
+                }); 
+ 
+                const finalContent = typeof content === 'string' ? this.parseMarkdown(content) : content; 
+ 
+                messageDiv.innerHTML = ` 
+                    <div class="message-bubble"> 
+                        <div>${finalContent}</div> 
+                        <div class="message-time">${time}</div> 
+                    </div> 
+                    <div class="message-actions"> 
+                        <button class="message-action-btn" onclick="whizz.copyMessage(event)" title="نسخ الرسالة"> 
+                            <i class="fas fa-copy"></i> 
+                        </button> 
+                    </div> 
+                `; 
+ 
+                return messageDiv; 
+            } 
+ 
+            showTypingIndicator() { 
+                const typingDiv = document.createElement('div'); 
+                typingDiv.className = 'typing-indicator'; 
+                typingDiv.innerHTML = ` 
+                    <div class="typing-avatar">🤖</div> 
+                    <span>Whizz.ink يكتب...</span> 
+                    <div class="typing-dots"> 
+                        <div class="typing-dot"></div> 
+                        <div class="typing-dot"></div> 
+                        <div class="typing-dot"></div> 
+                    </div> 
+                `; 
+                typingDiv.id = 'typingIndicator'; 
+                this.elements.chatContainer.appendChild(typingDiv); 
+                this.scrollToBottom(); 
+            } 
+ 
+            hideTypingIndicator() { 
+                const indicator = document.getElementById('typingIndicator'); 
+                if (indicator) { 
+                    indicator.remove(); 
+                } 
+            } 
+ 
+            saveState() { 
+                localStorage.setItem('whizzInkChatHistory', JSON.stringify(this.state.chatHistory)); 
+                localStorage.setItem('whizz-theme', this.state.theme); 
+            } 
+ 
+            loadState() { 
+                const savedHistory = localStorage.getItem('whizzInkChatHistory'); 
+                if (savedHistory) { 
+                    this.state.chatHistory = JSON.parse(savedHistory); 
+                } 
+            } 
+ 
+            // 🧹 الدالة الصحيحة الوحيدة المتبقية
+            renderInitialChatHistory() {  
+                if (this.state.chatHistory.length > 0) {  
+                    this.elements.welcomeMessage.style.display = 'none';  
+                    this.state.chatHistory.forEach(msg => {  
+                        this.addMessageToDOM(msg.parts, msg.role, msg.uuid); 
+                        hljs.highlightAll();  
+                    });  
+                    this.scrollToBottom();  
                 }  
-            }  
-   
-            startBackgroundAnimations() {  
-                let hue = 180;  
-                setInterval(() => {  
-                    hue = (hue + 1) % 360;  
-                    this.elements.logoText.style.filter = `hue-rotate(${hue}deg)`;  
-                }, 100);  
-   
-                // ... (جزيئات الخلفية تم حذفها لتجنب التكرار وهي تعمل بشكل سليم)  
-            }  
-   
-            focusInput() {  
-                setTimeout(() => this.elements.messageInput.focus(), 100);  
-            }  
-        }  
-   
-        // تهيئة التطبيق  
-        const aladan = new AladanAI();  
-   
-        // Global functions for onclick handlers  
-        window.aladan = aladan;  
-        window.toggleDashboard = (state) => aladan.toggleDashboard(state);  
-  
-        document.addEventListener('DOMContentLoaded', () => {  
-            hljs.highlightAll();  
-        });  
-    </script>  
-</body>  
+            } 
+ 
+            clearConversation() { 
+                if (confirm('🗑️ هل تريد مسح جميع المحادثات؟ (لا يمكن التراجع)')) { 
+                    this.elements.chatContainer.innerHTML = ''; 
+                    this.elements.chatContainer.appendChild(this.elements.welcomeMessage); 
+                    this.elements.welcomeMessage.style.display = 'block'; 
+                    this.state.chatHistory = []; 
+                    localStorage.removeItem('whizzInkChatHistory'); 
+                    this.showNotification('✅ تم مسح المحادثة بنجاح!', 'success'); 
+                    this.elements.sendBtn.disabled = true; 
+                    this.elements.messageInput.value = ''; 
+                } 
+            } 
+ 
+            scrollToBottom() { 
+                this.elements.chatContainer.scrollTo({ 
+                    top: this.elements.chatContainer.scrollHeight, 
+                    behavior: 'smooth' 
+                }); 
+            } 
+ 
+            delay(ms) { 
+                return new Promise(resolve => setTimeout(resolve, ms)); 
+            } 
+ 
+            showNotification(text, type = 'info') { 
+                this.elements.notification.textContent = text; 
+                this.elements.notification.className = `notification ${type} show`; 
+                setTimeout(() => { 
+                    this.elements.notification.classList.remove('show'); 
+                }, 4000); 
+            } 
+        } 
+ 
+        // Initialize App 
+        const whizz = new WhizzAI(); 
+        window.whizz = whizz; 
+ 
+        document.addEventListener('DOMContentLoaded', () => { 
+            hljs.highlightAll(); 
+            whizz.elements.messageInput.focus(); 
+        }); 
+    </script> 
+</body> 
 </html>
