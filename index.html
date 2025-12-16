@@ -10,10 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"> 
     <style> 
-        /* ========================================================================== 
-           WHIZZ.INK - النسخة المحدثة مع Dark Mode وربط مباشر بـ Gemini API وتحديد حجم السجل وزر الإيقاف ودعم الصور وتصفية السجل 
-           Updated: 2025-12-16 | Developer: aladan (Whizz.ink) 
-           ========================================================================== */ 
+        /* ... (أكواد CSS تبقى كما هي) ... */
  
         :root { 
             /* Light Theme (Default) */ 
@@ -588,14 +585,13 @@
         // ========================================================================== 
         // WHIZZ.INK - النسخة المحدثة مع Dark Mode وربط مباشر بـ Gemini API ودعم الصور 
         // Updated: 2025-12-16 | Developer: aladan (Whizz.ink) 
-        // ⚠️ تم تنظيف الأخطاء الحرجة (settingsBtn وتكرار الدوال) 
-        // 🛠️ تم إضافة نص افتراضي للصور المرسلة بدون نص
-        // 🛡️ تم تأمين المفتاح عبر استخدام Cloudflare Worker كـ Proxy
+        // 🛠️ تم تأمين منطق تفعيل/تعطيل زر الإرسال (Send Button)
+        // 🛡️ تم تحديث رابط الوكيل (Proxy URL)
         // ========================================================================== 
  
         // 🚨🚨🚨 ملاحظة هامة: تم حذف GEMINI_API_KEY نهائياً من هذا الملف!
-        // 🚀 يجب أن تقوم بتحديث هذا الرابط إلى رابط Cloudflare Worker الخاص بك 
-        const GEMINI_API_URL = "https://gemini-proxy-adil.adillaghrifi5.workers.dev"; // ⬅️ رابط Proxy الخاص بك
+        // 🚀 يجب أن تقوم بتحديث هذا الرابط إلى رابط Cloudflare Worker الخاص بك (استخدم الرابط الصحيح الذي لديك)
+        const GEMINI_API_URL = "https://gemini-proxy-adil.adillaghrifi5.workers.dev"; // ⬅️ الرجاء التأكد من صحة هذا الرابط
          
         const MAX_HISTORY_MESSAGES = 10;  
  
@@ -619,7 +615,7 @@
                 this.loadState(); 
                 this.initTheme(); 
                 this.initEventListeners(); 
-                this.renderInitialChatHistory(); // 🧹 الدالة غير مكررة الآن
+                this.renderInitialChatHistory(); 
             } 
  
             initElements() { 
@@ -630,7 +626,6 @@
                     welcomeMessage: document.getElementById('welcomeMessage'), 
                     notification: document.getElementById('notification'), 
                     clearChat: document.getElementById('clearChat'), 
-                    // ❌ تم حذف settingsBtn: document.getElementById('settingsBtn'), 
                     themeToggle: document.getElementById('themeToggle'), 
                     stopIcon: document.getElementById('stopIcon'), 
                     sendIcon: document.getElementById('sendIcon'), 
@@ -658,13 +653,23 @@
                 ); 
             } 
  
+            // 🆕 دالة مساعدة لتحديث حالة زر الإرسال بناءً على النص والصورة
+            updateSendButtonState() {
+                const textIsEmpty = this.elements.messageInput.value.trim().length === 0;
+                const hasNoImage = !this.state.currentImageBase64;
+                
+                // يتم تعطيل الزر فقط إذا كان النص فارغاً ولا توجد صورة مرفقة
+                this.elements.sendBtn.disabled = textIsEmpty && hasNoImage;
+            }
+
             initEventListeners() { 
                 
                 // Auto-resize textarea 
                 this.elements.messageInput.addEventListener('input', (e) => { 
                     e.target.style.height = 'auto'; 
                     e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'; 
-                    this.elements.sendBtn.disabled = (e.target.value.trim().length === 0 && !this.state.currentImageBase64);  
+                    // 🛠️ تم التعديل هنا: استخدام الدالة الجديدة
+                    this.updateSendButtonState();
                 }); 
  
                 // Theme toggle 
@@ -721,7 +726,8 @@
                     this.elements.imagePreview.src = reader.result; 
                     this.elements.imagePreviewContainer.style.display = 'flex'; 
                     this.elements.messageInput.focus(); 
-                    this.elements.sendBtn.disabled = false; 
+                    // 🛠️ تم التعديل هنا: استخدام الدالة الجديدة
+                    this.updateSendButtonState(); 
                 }; 
                 reader.readAsDataURL(file); 
                 this.showNotification(`تم إرفاق الصورة: ${file.name}`, 'info'); 
@@ -734,7 +740,8 @@
                 this.elements.imagePreview.src = ''; 
                 this.elements.imagePreviewContainer.style.display = 'none'; 
                 
-                this.elements.sendBtn.disabled = this.elements.messageInput.value.trim().length === 0; 
+                // 🛠️ تم التعديل هنا: استخدام الدالة الجديدة
+                this.updateSendButtonState();
                 this.showNotification('تم إزالة الصورة.', 'info'); 
             } 
  
@@ -758,14 +765,16 @@
                     this.showNotification('تم إيقاف الرد بنجاح.', 'info'); 
                     this.hideTypingIndicator(); 
                     this.toggleSendButton(false); 
-                    this.elements.sendBtn.disabled = false; 
+                    // 🛠️ تفعيل الزر بعد الإلغاء
+                    this.updateSendButtonState();
                     this.elements.messageInput.focus(); 
                 } 
             } 
  
             async sendMessage() { 
                 const text = this.elements.messageInput.value.trim(); 
-                if (!text && !this.state.currentImageBase64 || this.elements.sendBtn.disabled) return; 
+                // 🛠️ يجب أن تكون الرسالة غير فارغة وغير معطلة
+                if ((!text && !this.state.currentImageBase64) || this.elements.sendBtn.disabled) return; 
  
                 const messageUUID = generateUUID(); 
                  
@@ -803,7 +812,9 @@
                 this.elements.welcomeMessage.style.display = 'none'; 
                 this.elements.messageInput.value = ''; 
                 this.elements.messageInput.style.height = 'auto'; 
-                this.elements.sendBtn.disabled = false;  
+                
+                // 🛠️ تعطيل الزر مؤقتاً أثناء الإرسال (مهم)
+                this.elements.sendBtn.disabled = true;  
                 this.toggleSendButton(true); 
  
  
@@ -910,7 +921,8 @@
                 } finally {  
                     this.toggleSendButton(false);  
                     this.hideTypingIndicator();  
-                    this.elements.sendBtn.disabled = this.elements.messageInput.value.trim().length === 0; 
+                    // 🛠️ تم التعديل هنا: استخدام الدالة الجديدة لتحديث الحالة بعد الانتهاء
+                    this.updateSendButtonState();
                     this.elements.messageInput.focus();  
                 } 
             } 
@@ -1004,6 +1016,7 @@
  
             sendPredefinedMessage(text) { 
                 this.elements.messageInput.value = text; 
+                // 🛠️ تفعيل الزر عند إرسال رسالة معدة مسبقاً
                 this.elements.sendBtn.disabled = false;  
                 this.sendMessage(); 
             } 
